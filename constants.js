@@ -162,7 +162,7 @@ export const mentalDrumColors = [
 export const sideMainButtonConfig = [
 	{
 		index: 0,
-		imagePath: '/img/face.png',
+		imagePath: '/img/buttons/face.png',
 		position: new THREE.Vector3(0, 18, 9),
 		lookAt: new THREE.Vector3(0, 19.5, 0),
 		zoom: 5,
@@ -170,7 +170,7 @@ export const sideMainButtonConfig = [
 	},
 	{
 		index: 1,
-		imagePath: '/img/brain.png',
+		imagePath: '/img/buttons/brain.png',
 		position: new THREE.Vector3(0, 31.1, 9),
 		lookAt: new THREE.Vector3(0, 20.1, 0),
 		zoom: 3,
@@ -178,7 +178,7 @@ export const sideMainButtonConfig = [
 	},
 	{
 		index: 2,
-		imagePath: '/img/organs.png',
+		imagePath: '/img/buttons/breath.png',
 		position: new THREE.Vector3(0, 13.5, 10),
 		lookAt: new THREE.Vector3(0, 13.5, 0),
 		zoom: 2.8,

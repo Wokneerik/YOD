@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { sideMainButtonConfig } from '../../constants'
+import { sideMainButtonConfig } from '../../../constants'
 
-const SideMainBodyButtons = ({
+const SideMainButtons = ({
 	onButtonClick,
 	setIsControlsBtnVisible,
 	setBrainBtnClick,
@@ -14,8 +14,8 @@ const SideMainBodyButtons = ({
       .control-button {
         position: fixed;
         left: 20px;
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         margin-bottom: 15px; 
         border: 7px solid white;
         border-radius: 50%;
@@ -106,4 +106,4 @@ const SideMainBodyButtons = ({
 	return null
 }
 
-export default SideMainBodyButtons
+export default SideMainButtons

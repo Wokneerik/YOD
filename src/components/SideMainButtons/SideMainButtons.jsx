@@ -17,7 +17,7 @@ const SideMainButtons = ({
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 15px;
+        
         z-index: 9997;
         opacity: 0;
         transition: opacity 0.3s ease, transform 0.3s ease, background-image 0.3s ease;
@@ -66,7 +66,7 @@ const SideMainButtons = ({
 
 				// Calculate position
 				const totalButtons = sideMainButtonConfig.length
-				const buttonHeightWithLabel = 70 // Increased height to accommodate label
+				const buttonHeightWithLabel = 90
 				const buttonMargin = 20
 				const totalHeight =
 					totalButtons * buttonHeightWithLabel +

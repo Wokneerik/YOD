@@ -1,0 +1,83 @@
+.shop-button {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	border: 7px solid white;
+	border-radius: 50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	cursor: pointer;
+	opacity: 0;
+	transform: scale(0.8);
+	animation: appear 0.3s ease 0.2s forwards;
+	display: flex;
+	justify-content: center;
+}
+
+.shop-button::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: calc(100% - 6px);
+	height: calc(100% - 6px);
+	border-radius: 50%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	transform: translate(-50%, -50%);
+	transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.shop-button.showing-shop-close::before {
+	background-image: url('/img/buttons/close.png');
+	background-size: 75%;
+	opacity: 1;
+	width: calc(100% - 15px);
+	height: calc(100% - 15px);
+}
+
+.shop-button.showing-shop-btn::before {
+	background-image: url('/img/buttons/shop.png');
+	opacity: 1;
+}
+
+@keyframes appear {
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.shop-button-label {
+	font-size: 11px;
+	padding-top: 58px;
+}
+
+.shop-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(255 255 255 / 70%);
+	backdrop-filter: blur(7px) contrast(70%);
+	-webkit-backdrop-filter: blur(6px) contrast(60%);
+	z-index: 99999;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.shop-overlay.active {
+	opacity: 1;
+	visibility: visible;
+}

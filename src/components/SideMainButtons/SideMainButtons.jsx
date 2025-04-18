@@ -11,51 +11,74 @@ const SideMainButtons = ({
 	useEffect(() => {
 		const style = document.createElement('style')
 		style.textContent = `
-      .control-button {
+      .control-button-container {
         position: fixed;
         left: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15px;
+        z-index: 9997;
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease, background-image 0.3s ease;
+      }
+
+      .control-button-container.show {
+        opacity: 1;
+      }
+
+      .control-button {
         width: 50px;
         height: 50px;
-        margin-bottom: 15px; 
         border: 7px solid white;
         border-radius: 50%;
         background-size: cover;
         background-position: center;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         cursor: pointer;
-        z-index: 9997; 
-				opacity: 0;
-        transition: opacity 0.3s ease, transform 0.3s ease, background-image 0.3s ease;
       }
 
-			.control-button.show {
-        opacity: 1;
+      .control-button-label {
+        font-size: 11px;
+        color: white; 
+        text-align: center;
+        
        
       }
     `
 		document.head.appendChild(style)
 
-		const buttons = sideMainButtonConfig.map(
-			({ index, imagePath, position, lookAt, zoom, targetFov }) => {
+		const buttonsWithLabels = sideMainButtonConfig.map(
+			({ index, imagePath, position, lookAt, zoom, targetFov, label }) => {
+				const container = document.createElement('div')
+				container.className = 'control-button-container'
+
 				const button = document.createElement('div')
 				button.className = 'control-button'
 				button.style.backgroundImage = `url(${imagePath})`
 
+				const labelElement = document.createElement('div')
+				labelElement.className = 'control-button-label'
+				labelElement.textContent = label
+
+				container.appendChild(button)
+				container.appendChild(labelElement)
+
 				// Calculate position
 				const totalButtons = sideMainButtonConfig.length
-				const buttonHeight = 70
+				const buttonHeightWithLabel = 70 // Increased height to accommodate label
 				const buttonMargin = 20
 				const totalHeight =
-					totalButtons * buttonHeight + (totalButtons - 1) * buttonMargin
+					totalButtons * buttonHeightWithLabel +
+					(totalButtons - 1) * buttonMargin
 				const screenHeight = window.innerHeight
 				const topOffset =
 					(screenHeight - totalHeight) / 2 +
-					index * (buttonHeight + buttonMargin)
-				button.style.top = `${topOffset}px`
+					index * (buttonHeightWithLabel + buttonMargin)
+				container.style.top = `${topOffset}px`
 
-				button.addEventListener('click', () => {
+				container.addEventListener('click', () => {
 					onButtonClick(position, lookAt, zoom, targetFov)
-
 					setIsControlsBtnVisible(false)
 
 					if (index === 0) {
@@ -71,33 +94,34 @@ const SideMainButtons = ({
 					}
 				})
 
-				document.body.appendChild(button)
+				document.body.appendChild(container)
 
-				setTimeout(() => button.classList.add('show'), 200)
+				setTimeout(() => container.classList.add('show'), 200)
 
-				return button
+				return container
 			}
 		)
 
 		// Update positions on window resize
 		const handleResize = () => {
-			buttons.forEach((button, index) => {
-				const buttonHeight = 80
+			buttonsWithLabels.forEach((container, index) => {
+				const buttonHeightWithLabel = 70
 				const buttonMargin = 20
 				const totalHeight =
-					buttons.length * buttonHeight + (buttons.length - 1) * buttonMargin
+					buttonsWithLabels.length * buttonHeightWithLabel +
+					(buttonsWithLabels.length - 1) * buttonMargin
 				const screenHeight = window.innerHeight
 				const topOffset =
 					(screenHeight - totalHeight) / 2 +
-					index * (buttonHeight + buttonMargin)
-				button.style.top = `${topOffset}px`
+					index * (buttonHeightWithLabel + buttonMargin)
+				container.style.top = `${topOffset}px`
 			})
 		}
 		window.addEventListener('resize', handleResize)
 
 		// Cleanup on unmount
 		return () => {
-			buttons.forEach(button => button.remove())
+			buttonsWithLabels.forEach(container => container.remove())
 			style.remove()
 			window.removeEventListener('resize', handleResize)
 		}

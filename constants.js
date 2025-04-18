@@ -167,6 +167,7 @@ export const sideMainButtonConfig = [
 		lookAt: new THREE.Vector3(0, 19.5, 0),
 		zoom: 5,
 		targetFov: 15,
+		label: 'face',
 	},
 	{
 		index: 1,
@@ -175,6 +176,7 @@ export const sideMainButtonConfig = [
 		lookAt: new THREE.Vector3(0, 20.1, 0),
 		zoom: 3,
 		targetFov: 16.3,
+		label: 'mental',
 	},
 	{
 		index: 2,
@@ -183,6 +185,7 @@ export const sideMainButtonConfig = [
 		lookAt: new THREE.Vector3(0, 13.5, 0),
 		zoom: 2.8,
 		targetFov: 25,
+		label: 'breath',
 	},
 ]
 

@@ -8,8 +8,8 @@
 
 .outer-circle {
 	position: fixed;
-	width: 60px;
-	height: 60px;
+	width: 58px;
+	height: 58px;
 	border: 1.5px solid white;
 	border-radius: 50%;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -20,8 +20,8 @@
 
 .inner-circle {
 	position: absolute;
-	left: 8.5px;
-	top: 8.5px;
+	left: 8px;
+	top: 8px;
 	width: 42.5px;
 	height: 42.5px;
 	border: 1.5px solid white;
@@ -35,7 +35,7 @@
 	height: 12px;
 	background-color: rgba(55, 55, 55, 0.7);
 	border-radius: 50%;
-	transform: translate(-40%, 40%);
+	transform: translate(-45%, 45%);
 	z-index: 9999;
 	display: flex;
 	justify-content: center;
@@ -216,5 +216,5 @@
 
 .state-check-label {
 	font-size: 11px;
-	padding-top: 78px;
+	padding-top: 81px;
 }

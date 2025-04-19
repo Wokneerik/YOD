@@ -8,8 +8,8 @@ import Account from '../Account/Account.jsx'
 import Avatar from '../Avatar/Avatar.jsx'
 import CaloriesButton from '../CaloriesButton/CaloriesButton.jsx'
 import Logo from '../Logo/Logo.jsx'
-import ShopButton from '../Shop/Shop.jsx'
 import StateCheck from '../StateCheck/StateCheck.jsx'
+import StoreButton from '../StoreButton/StoreButton.jsx'
 
 const SceneCanvas = () => {
 	const near = 0.1
@@ -47,7 +47,7 @@ const SceneCanvas = () => {
 				<Account />
 				<StateCheck />
 				<CaloriesButton />
-				<ShopButton />
+				<StoreButton />
 			</Suspense>
 
 			<Canvas camera={camera} style={{ zIndex: 100 }}>

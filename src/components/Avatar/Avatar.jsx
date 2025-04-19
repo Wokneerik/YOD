@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import { cameraFov, cameraPosition } from '../../../constants.js'
 import resetCamera from '../../utils/resetCamera'
 import BackButton from '../BackButton/BackButton'
+import EnergySegment from '../EnergySegment/EnergySegment.jsx'
 import FloorRing from '../FloorRing/FloorRing'
 import SideMainButtons from '../SideMainButtons/SideMainButtons.jsx'
 
@@ -137,6 +138,7 @@ const Avatar = () => {
 				/>
 			)}
 			<FloorRing />
+			<EnergySegment />
 		</>
 	)
 }

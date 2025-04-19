@@ -1,0 +1,26 @@
+.product-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.product-image-frame {
+	width: 130px;
+	height: 170px;
+	border: 7px solid white;
+	border-radius: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.product-image {
+	width: 100%;
+}
+
+.product-name {
+	margin-top: 10px;
+	color: white;
+	text-align: center;
+}

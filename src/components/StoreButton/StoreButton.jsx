@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ProductItem from '../ProductItem/ProductItem'
 import './style.css'
 
 const StoreButton = () => {
@@ -7,6 +8,28 @@ const StoreButton = () => {
 	const handleButtonClick = () => {
 		setIsShopOpen(prev => !prev)
 	}
+
+	const products = [
+		{ img: '/img/products/jar2.png', name: 'Omega-3 ' },
+		{ img: '/img/products/jar2.png', name: 'Vitamin D3 ' },
+		{ img: '/img/products/jar2.png', name: 'Probiotic' },
+		{ img: '/img/products/jar2.png', name: 'Probiotic' },
+
+		{ img: '/img/products/jar2.png', name: 'Omega-3 ' },
+		{ img: '/img/products/jar2.png', name: 'Vitamin D3 ' },
+		{ img: '/img/products/jar2.png', name: 'Probiotic' },
+		{ img: '/img/products/jar2.png', name: 'Probiotic' },
+
+		{ img: '/img/products/jar2.png', name: 'Omega-3 ' },
+		{ img: '/img/products/jar2.png', name: 'Vitamin D3 ' },
+		{ img: '/img/products/jar2.png', name: 'Probiotic' },
+		{ img: '/img/products/jar2.png', name: 'Probiotic' },
+
+		{ img: '/img/products/jar2.png', name: 'Omega-3 ' },
+		{ img: '/img/products/jar2.png', name: 'Vitamin D3 ' },
+		{ img: '/img/products/jar2.png', name: 'Probiotic' },
+		{ img: '/img/products/jar2.png', name: 'Probiotic' },
+	]
 
 	return (
 		<>
@@ -22,9 +45,19 @@ const StoreButton = () => {
 
 			<div className={`shop-overlay ${isShopOpen ? 'active' : ''}`}>
 				{isShopOpen && (
-					<h1 className='store-heading'>
-						<span className='store-heading-gradient'>YOD</span> store
-					</h1>
+					<div className='shop-overlay-content'>
+						<div className='store-header'>
+							<h1 className='store-heading'>
+								<span className='store-heading-gradient'>YOD</span> store
+							</h1>
+							<h2 className='store-subtitle-frame'>AI-Powered Health Shop</h2>
+						</div>
+						<div className='product-list'>
+							{products.map((product, index) => (
+								<ProductItem key={index} product={product} />
+							))}
+						</div>
+					</div>
 				)}
 			</div>
 		</>

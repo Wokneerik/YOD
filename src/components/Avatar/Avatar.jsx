@@ -113,7 +113,7 @@ const Avatar = () => {
 				minDistance={20}
 				maxDistance={60}
 				target={[0, 10, 0]}
-				maxPolarAngle={Math.PI / 2}
+				maxPolarAngle={Math.PI / 2.3}
 				minPolarAngle={Math.PI / 4.5}
 			/>
 

@@ -41,7 +41,7 @@ const EnergySegment = () => {
 
 			const material = new MeshLineMaterial({
 				lineWidth: 0.07, // Increase this for thicker line
-				color: new THREE.Color(0xffffff),
+				color: new THREE.Color(0xf1f1f1),
 				transparent: false,
 				depthTest: false,
 				dashArray: 0,

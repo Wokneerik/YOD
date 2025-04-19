@@ -46,8 +46,8 @@ const SceneCanvas = () => {
 			<Suspense fallback={null}>
 				<Account />
 				<StateCheck />
-				<ShopButton />
 				<CaloriesButton />
+				<ShopButton />
 			</Suspense>
 
 			<Canvas camera={camera} style={{ zIndex: 100 }}>
@@ -66,6 +66,7 @@ const SceneCanvas = () => {
 				/>
 
 				<Avatar />
+				<axesHelper args={[5]} />
 			</Canvas>
 		</div>
 	)

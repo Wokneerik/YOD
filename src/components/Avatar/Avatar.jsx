@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import { cameraFov, cameraPosition } from '../../../constants.js'
 import resetCamera from '../../utils/resetCamera'
 import BackButton from '../BackButton/BackButton'
+
 import EnergyCapsule from '../EnergyCapsule/EnergyCapsule.jsx'
 import EnergySegment from '../EnergySegment/EnergySegment.jsx'
 import FloorRing from '../FloorRing/FloorRing'

@@ -8,7 +8,6 @@ const EnergyCapsule = ({ count = 7 }) => {
 	useEffect(() => {
 		const capsuleMeshes = []
 
-		// Capsule shape (rounded rectangle)
 		const generateRecShape = () => {
 			const shape = new THREE.Shape()
 			const width = 0.65

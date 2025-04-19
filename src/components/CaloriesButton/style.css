@@ -68,16 +68,97 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgb(255 255 255 / 70%);
+	background-color: rgb(0 0 0 / 85%);
 	backdrop-filter: blur(7px) contrast(70%);
-	-webkit-backdrop-filter: blur(6px) contrast(60%);
+	-webkit-backdrop-filter: blur(7px) contrast(70%);
 	z-index: 99999;
 	opacity: 0;
 	visibility: hidden;
 	transition: opacity 0.3s ease, visibility 0.3s ease;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .calories-overlay.active {
 	opacity: 1;
 	visibility: visible;
+}
+.camera-shutter-button {
+	position: fixed;
+	bottom: 100px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 60px;
+	height: 60px;
+	border: 2px solid white;
+	border-radius: 50%;
+	background-color: rgba(255, 255, 255, 0.5);
+	z-index: 9999999;
+}
+
+.camera-shutter-button::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 40px;
+	height: 40px;
+	background-color: white;
+	border-radius: 50%;
+}
+
+.focus-rectangle {
+	width: 68%;
+	height: 50%;
+	border: 4px dashed white;
+	border-radius: 17px;
+	z-index: 999999;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	padding-top: 20px;
+	margin-bottom: 150px;
+}
+
+.nutrient-buttons-container-top {
+	display: flex;
+	gap: 25px;
+	margin-bottom: 10px;
+}
+
+.nutrient-button {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.nutrient-button-outer {
+	width: 55px;
+	height: 55px;
+	border: 2px solid white;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.nutrient-button-inner {
+	width: 40px;
+	height: 40px;
+	border: 2px solid white;
+	border-radius: 50%;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.nutrient-label {
+	color: white;
+	font-size: 12px;
+	margin-top: 5px;
+	text-align: center;
 }

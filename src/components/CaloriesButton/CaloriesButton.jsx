@@ -11,6 +11,12 @@ const CaloriesButton = () => {
 
 	const { showHealthConditionButton } = useSelector(state => state.stateCheck)
 
+	const nutrientButtons = [
+		{ name: 'carbs', image: '/img/calories/carbs.png' },
+		{ name: 'fat', image: '/img/calories/fat.png' },
+		{ name: 'protein', image: '/img/calories/protein.png' },
+	]
+
 	return (
 		<>
 			{showHealthConditionButton && (
@@ -25,9 +31,27 @@ const CaloriesButton = () => {
 				</div>
 			)}
 
-			<div
-				className={`calories-overlay ${isCaloriesOpen ? 'active' : ''}`}
-			></div>
+			<div className={`calories-overlay ${isCaloriesOpen ? 'active' : ''}`}>
+				{isCaloriesOpen && (
+					<>
+						<div className='nutrient-buttons-container-top'>
+							{nutrientButtons.map(button => (
+								<div className='nutrient-button' key={button.name}>
+									<div className='nutrient-button-outer'>
+										<div
+											className='nutrient-button-inner'
+											style={{ backgroundImage: `url(${button.image})` }}
+										></div>
+									</div>
+									<div className='nutrient-label'>{button.name}</div>
+								</div>
+							))}
+						</div>
+						<div className='camera-shutter-button'></div>
+						<div className='focus-rectangle'></div>
+					</>
+				)}
+			</div>
 		</>
 	)
 }

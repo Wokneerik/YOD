@@ -66,7 +66,6 @@ const SceneCanvas = () => {
 				/>
 
 				<Avatar />
-				<axesHelper args={[5]} />
 			</Canvas>
 		</div>
 	)

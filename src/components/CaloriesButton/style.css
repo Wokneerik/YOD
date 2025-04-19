@@ -85,6 +85,7 @@
 	opacity: 1;
 	visibility: visible;
 }
+
 .camera-shutter-button {
 	position: fixed;
 	bottom: 100px;
@@ -94,20 +95,24 @@
 	height: 60px;
 	border: 2px solid white;
 	border-radius: 50%;
-	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 9999999;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.camera-shutter-button::before {
-	content: '';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 40px;
-	height: 40px;
-	background-color: white;
+.camera-shutter-button-inner {
+	width: 50px;
+	height: 50px;
 	border-radius: 50%;
+	background-color: white;
+	transition: background-color 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.camera-shutter-button-inner.pressed {
+	background-color: rgba(255, 255, 255, 0.5);
+	transform: scale(0.9);
 }
 
 .focus-rectangle {

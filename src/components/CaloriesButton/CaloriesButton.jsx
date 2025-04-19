@@ -5,8 +5,17 @@ import './style.css'
 const CaloriesButton = () => {
 	const [isCaloriesOpen, setIsCaloriesOpen] = useState(false)
 
+	const [isShutterPressed, setIsShutterPressed] = useState(false)
+
 	const handleButtonClick = () => {
 		setIsCaloriesOpen(prev => !prev)
+	}
+
+	const handleShutterPress = () => {
+		setIsShutterPressed(true)
+		setTimeout(() => {
+			setIsShutterPressed(false)
+		}, 100)
 	}
 
 	const { showHealthConditionButton } = useSelector(state => state.stateCheck)
@@ -47,7 +56,14 @@ const CaloriesButton = () => {
 								</div>
 							))}
 						</div>
-						<div className='camera-shutter-button'></div>
+						<div className={'camera-shutter-button'}>
+							<div
+								className={`camera-shutter-button-inner ${
+									isShutterPressed ? 'pressed' : ''
+								}`}
+								onClick={handleShutterPress}
+							></div>
+						</div>
 						<div className='focus-rectangle'></div>
 					</>
 				)}

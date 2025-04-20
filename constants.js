@@ -180,12 +180,11 @@ export const sideMainButtonConfig = [
 	},
 	{
 		index: 2,
-
 		imagePath: '/img/buttons/body.png',
-		position: new THREE.Vector3(0, 12.5, 10),
-		lookAt: new THREE.Vector3(0, 12.5, 0),
-		zoom: 1,
-		targetFov: 55,
+		position: new THREE.Vector3(0, 11, 10),
+		lookAt: new THREE.Vector3(0, 11, 0),
+		zoom: 0.5,
+		targetFov: 74,
 		label: 'body',
 	},
 ]

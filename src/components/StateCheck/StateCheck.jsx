@@ -22,6 +22,15 @@ const StateCheck = () => {
 	const [timeoutId, setTimeoutId] = useState(null)
 	const [isSliderTouched, setIsSliderTouched] = useState(false)
 
+	const [isShutterPressed, setIsShutterPressed] = useState(false)
+
+	const handleShutterPress = () => {
+		setIsShutterPressed(true)
+		setTimeout(() => {
+			setIsShutterPressed(false)
+		}, 100)
+	}
+
 	const createMarks = () => {
 		return Array.from({ length: 11 }, (_, i) => (
 			<div
@@ -262,7 +271,39 @@ const StateCheck = () => {
 					</div>
 					<div
 						className={`state-check-overlay ${openStateScreen ? 'active' : ''}`}
-					/>
+					>
+						{openStateScreen && (
+							<>
+								<div className={'state-check-camera-shutter-button'}>
+									<div
+										className={`state-check-camera-shutter-button-inner ${
+											isShutterPressed ? 'pressed' : ''
+										}`}
+										onClick={handleShutterPress}
+									></div>
+								</div>
+								<div className='face-frame-container'>
+									<svg viewBox='0 0 240 250' xmlns='http://www.w3.org/2000/svg'>
+										<path
+											d='M 120 30
+           C 90 30, 65 50, 55 90
+           C 50 115, 50 140, 55 165
+           C 60 190, 75 210, 90 225
+           C 100 235, 110 240, 120 242
+           C 130 240, 140 235, 150 225
+           C 165 210, 180 190, 185 165
+           C 190 140, 190 115, 185 90
+           C 175 50, 150 30, 120 30 Z'
+											fill='none'
+											stroke='white'
+											stroke-width='3'
+											stroke-dasharray='5 5'
+										/>
+									</svg>
+								</div>
+							</>
+						)}
+					</div>
 				</>
 			)}
 		</>

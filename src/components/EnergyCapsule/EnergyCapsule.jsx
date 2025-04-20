@@ -2,7 +2,7 @@ import { useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
 import * as THREE from 'three'
 
-const EnergyCapsule = ({ count = 7 }) => {
+const EnergyCapsule = ({ count = 5 }) => {
 	const { scene } = useThree()
 
 	useEffect(() => {
@@ -67,7 +67,7 @@ const EnergyCapsule = ({ count = 7 }) => {
 		})
 
 		const radius = 6
-		const thetaStart = -Math.PI / 3.35
+		const thetaStart = -Math.PI / 5.35
 
 		const capsuleSpacing = 0.085
 

@@ -1,19 +1,32 @@
 import { useThree } from '@react-three/fiber'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { MeshLine, MeshLineMaterial } from 'three.meshline'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 
 const EnergySegment = () => {
 	const { scene } = useThree()
 
+	const radius = 6
+	const innerWidth = 0.45
+
+	const textRadius = 5.5
+	const textThetaStart = -Math.PI / 3.5
+	const textThetaLength = Math.PI / 16
+
+	const thetaStart = -Math.PI / 3.2
+	const thetaLength = Math.PI / 3.5
+	const segments = 30
+	const textMaterialRef = useRef()
+	const vitalityText = 'VIM'
+	const textColor = 0xffffff
+	const textSize = 0.55
+	const textMeshesRef = useRef([])
+	const textGeometriesRef = useRef([])
+
 	useEffect(() => {
 		const createBorderedRingPath = () => {
-			const radius = 6
-			const innerWidth = 0.45
-			const thetaStart = -Math.PI / 3.2
-			const thetaLength = Math.PI / 3.9
-			const segments = 30
-
 			const points = []
 
 			// Add inner arc
@@ -40,10 +53,10 @@ const EnergySegment = () => {
 			meshLine.setPoints(points)
 
 			const material = new MeshLineMaterial({
-				lineWidth: 0.07, // Increase this for thicker line
+				lineWidth: 0.075, // Increase this for thicker line
 				color: new THREE.Color(0xf1f1f1),
 				transparent: false,
-				depthTest: false,
+				depthTest: true,
 				dashArray: 0,
 			})
 
@@ -56,10 +69,68 @@ const EnergySegment = () => {
 
 		const path = createBorderedRingPath()
 
+		const loadFontAndCreateText = async () => {
+			const loader = new FontLoader()
+			try {
+				const font = await loader.loadAsync('/src/fonts/Rubik_Medium.json')
+
+				const outerRadius = textRadius + innerWidth
+				const numChars = vitalityText.length
+
+				const initialRotationOffset = -Math.PI / 2
+
+				const textMaterial = new THREE.MeshBasicMaterial({
+					color: textColor,
+					transparent: true,
+					depthTest: true,
+				})
+				textMaterialRef.current = textMaterial
+
+				for (let i = 0; i < numChars; i++) {
+					const char = vitalityText[i]
+					const angle = textThetaStart + (i / (numChars - 1)) * textThetaLength
+					const x = outerRadius * Math.cos(angle)
+					const z = outerRadius * Math.sin(angle)
+
+					const textGeometry = new TextGeometry(char, {
+						font: font,
+						size: textSize,
+						height: 0.05,
+						curveSegments: 4,
+						bevelEnabled: false,
+					})
+
+					textGeometry.center()
+
+					const textMesh = new THREE.Mesh(textGeometry, textMaterial)
+
+					textMesh.position.set(x, 1.1, z)
+
+					textMesh.rotation.y = -angle + initialRotationOffset
+
+					textMesh.rotateX(-Math.PI / 2)
+
+					scene.add(textMesh)
+					textMeshesRef.current.push(textMesh)
+					textGeometriesRef.current.push(textGeometry)
+				}
+			} catch (error) {
+				console.error('Error loading font:', error)
+			}
+		}
+
+		loadFontAndCreateText()
+
 		return () => {
 			scene.remove(path.mesh)
 			path.geometry.dispose()
 			path.material.dispose()
+
+			textMeshesRef.current.forEach(mesh => scene.remove(mesh))
+			textGeometriesRef.current.forEach(geometry => geometry.dispose())
+			if (textMaterialRef.current) {
+				textMaterialRef.current.dispose()
+			}
 		}
 	}, [])
 

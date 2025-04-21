@@ -10,8 +10,8 @@ const StoreButton = () => {
 	}
 
 	const products = [
-		{ img: '/img/products/jar2.png', name: 'Omega-3 ' },
-		{ img: '/img/products/jar2.png', name: 'Vitamin D3 ' },
+		{ img: '/img/products/jar.png', name: 'Strength Turmeric ' },
+		{ img: '/img/products/jar2.png', name: 'Calcium Magnesium ' },
 		{ img: '/img/products/jar2.png', name: 'Probiotic' },
 		{ img: '/img/products/jar2.png', name: 'Probiotic' },
 

@@ -68,7 +68,7 @@ const EnergySegment = () => {
 		const loadFontAndCreateText = () => {
 			const loader = new FontLoader()
 
-			loader.load('/src/fonts/Rubik_Medium.json', function (font) {
+			loader.load('/fonts/Rubik_Medium.json', function (font) {
 				const outerRadius = textRadius + innerWidth
 				const numChars = vitalityText.length
 

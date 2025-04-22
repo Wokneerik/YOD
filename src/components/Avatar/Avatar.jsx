@@ -35,23 +35,6 @@ const Avatar = () => {
 
 	const human = useLoader(OBJLoader, '/public/models/Human.obj')
 
-	useEffect(() => {
-		const skinMaterial = new THREE.MeshStandardMaterial({ color: 0xffcc99 })
-
-		human.traverse(child => {
-			if (child.isMesh) {
-				child.material = skinMaterial
-			}
-		})
-
-		human.position.set(0, 1, 0)
-		scene.add(human)
-
-		return () => {
-			scene.remove(human)
-		}
-	}, [])
-
 	const cameraToFace = (targetPosition, targetLookAt, zoomLevel, targetFov) => {
 		if (controlsRef.current) {
 			controlsRef.current.enabled = false
@@ -104,6 +87,23 @@ const Avatar = () => {
 			controlsRef,
 			setControlsBlocked,
 		})
+
+	useEffect(() => {
+		const skinMaterial = new THREE.MeshStandardMaterial({ color: 0xffcc99 })
+
+		human.traverse(child => {
+			if (child.isMesh) {
+				child.material = skinMaterial
+			}
+		})
+
+		human.position.set(0, 1, 0)
+		scene.add(human)
+
+		return () => {
+			scene.remove(human)
+		}
+	}, [])
 
 	return (
 		<>

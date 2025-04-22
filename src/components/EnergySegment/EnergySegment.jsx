@@ -1,5 +1,5 @@
 import { useThree } from '@react-three/fiber'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import * as THREE from 'three'
 import { MeshLine, MeshLineMaterial } from 'three.meshline'
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
@@ -18,18 +18,17 @@ const EnergySegment = () => {
 	const thetaStart = -Math.PI / 3.2
 	const thetaLength = Math.PI / 3.5
 	const segments = 30
-	const textMaterialRef = useRef()
+
 	const vitalityText = 'VIM'
 	const textColor = 0xffffff
 	const textSize = 0.55
-	const textMeshesRef = useRef([])
-	const textGeometriesRef = useRef([])
 
 	useEffect(() => {
+		const createdTextMeshes = [] // <-- Store references here
+
 		const createBorderedRingPath = () => {
 			const points = []
 
-			// Add inner arc
 			for (let i = 0; i <= segments; i++) {
 				const theta = thetaStart + (i / segments) * thetaLength
 				const x = (radius - innerWidth) * Math.cos(theta)
@@ -37,7 +36,6 @@ const EnergySegment = () => {
 				points.push(x, 0, z)
 			}
 
-			// Add outer arc (reverse)
 			for (let i = segments; i >= 0; i--) {
 				const theta = thetaStart + (i / segments) * thetaLength
 				const x = (radius + innerWidth) * Math.cos(theta)
@@ -45,15 +43,13 @@ const EnergySegment = () => {
 				points.push(x, 0, z)
 			}
 
-			// Close the loop by adding the first point again
 			points.push(points[0], points[1], points[2])
 
-			// MeshLine requires a flat array, not Vector3s
 			const meshLine = new MeshLine()
 			meshLine.setPoints(points)
 
 			const material = new MeshLineMaterial({
-				lineWidth: 0.075, // Increase this for thicker line
+				lineWidth: 0.075,
 				color: new THREE.Color(0xf1f1f1),
 				transparent: false,
 				depthTest: true,
@@ -72,7 +68,7 @@ const EnergySegment = () => {
 		const loadFontAndCreateText = () => {
 			const loader = new FontLoader()
 
-			loader.load('fonts/Rubik_Medium.json', function (font) {
+			loader.load('/src/fonts/Rubik_Medium.json', function (font) {
 				const outerRadius = textRadius + innerWidth
 				const numChars = vitalityText.length
 
@@ -83,7 +79,6 @@ const EnergySegment = () => {
 					transparent: true,
 					depthTest: true,
 				})
-				textMaterialRef.current = textMaterial
 
 				for (let i = 0; i < numChars; i++) {
 					const char = vitalityText[i]
@@ -102,16 +97,16 @@ const EnergySegment = () => {
 					textGeometry.center()
 
 					const textMesh = new THREE.Mesh(textGeometry, textMaterial)
-
 					textMesh.position.set(x, 1.1, z)
-
 					textMesh.rotation.y = -angle + initialRotationOffset
-
 					textMesh.rotateX(-Math.PI / 2)
 
 					scene.add(textMesh)
-					textMeshesRef.current.push(textMesh)
-					textGeometriesRef.current.push(textGeometry)
+					createdTextMeshes.push({
+						mesh: textMesh,
+						geometry: textGeometry,
+						material: textMaterial,
+					})
 				}
 			})
 		}
@@ -123,11 +118,11 @@ const EnergySegment = () => {
 			path.geometry.dispose()
 			path.material.dispose()
 
-			textMeshesRef.current.forEach(mesh => scene.remove(mesh))
-			textGeometriesRef.current.forEach(geometry => geometry.dispose())
-			if (textMaterialRef.current) {
-				textMaterialRef.current.dispose()
-			}
+			createdTextMeshes.forEach(({ mesh, geometry, material }) => {
+				scene.remove(mesh)
+				geometry.dispose()
+				material.dispose()
+			})
 		}
 	}, [])
 

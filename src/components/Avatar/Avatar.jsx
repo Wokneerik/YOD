@@ -33,7 +33,7 @@ const Avatar = () => {
 
 	const [bodyBtnClick, setBodyBtnClick] = useState(false)
 
-	const human = useLoader(OBJLoader, '/public/models/Human.obj')
+	const human = useLoader(OBJLoader, './models/Human.obj')
 
 	const cameraToFace = (targetPosition, targetLookAt, zoomLevel, targetFov) => {
 		if (controlsRef.current) {

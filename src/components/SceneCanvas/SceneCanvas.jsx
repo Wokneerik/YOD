@@ -3,13 +3,17 @@ import { Canvas } from '@react-three/fiber'
 import React, { Suspense } from 'react'
 import * as THREE from 'three'
 import { cameraFov, cameraPosition } from '../../../constants.js'
-
-import Account from '../Account/Account.jsx'
 import Avatar from '../Avatar/Avatar.jsx'
-import CaloriesButton from '../CaloriesButton/CaloriesButton.jsx'
-import Logo from '../Logo/Logo.jsx'
-import StateCheck from '../StateCheck/StateCheck.jsx'
-import StoreButton from '../StoreButton/StoreButton.jsx'
+
+// UI Lazy Loading
+const Account = React.lazy(() => import('../Account/Account.jsx'))
+const StoreButton = React.lazy(() => import('../StoreButton/StoreButton.jsx'))
+const StateCheck = React.lazy(() => import('../StateCheck/StateCheck.jsx'))
+const CaloriesButton = React.lazy(() =>
+	import('../CaloriesButton/CaloriesButton.jsx')
+)
+
+const Logo = React.lazy(() => import('../Logo/Logo.jsx'))
 
 const SceneCanvas = () => {
 	const near = 0.1

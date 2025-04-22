@@ -71,9 +71,8 @@ const EnergySegment = () => {
 
 		const loadFontAndCreateText = async () => {
 			const loader = new FontLoader()
-			try {
-				const font = await loader.loadAsync('/src/fonts/Rubik_Medium.json')
 
+			loader.load('/src/fonts/Rubik_Medium.json', function (font) {
 				const outerRadius = textRadius + innerWidth
 				const numChars = vitalityText.length
 
@@ -114,9 +113,7 @@ const EnergySegment = () => {
 					textMeshesRef.current.push(textMesh)
 					textGeometriesRef.current.push(textGeometry)
 				}
-			} catch (error) {
-				console.error('Error loading font:', error)
-			}
+			})
 		}
 
 		loadFontAndCreateText()

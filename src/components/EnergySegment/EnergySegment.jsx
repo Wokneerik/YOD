@@ -24,7 +24,7 @@ const EnergySegment = () => {
 	const textSize = 0.55
 
 	useEffect(() => {
-		const createdTextMeshes = [] // <-- Store references here
+		const createdTextMeshes = []
 
 		const createBorderedRingPath = () => {
 			const points = []

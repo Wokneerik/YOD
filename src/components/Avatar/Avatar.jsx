@@ -1,6 +1,6 @@
 import { OrbitControls } from '@react-three/drei'
 import { useLoader, useThree } from '@react-three/fiber'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
 
@@ -140,9 +140,7 @@ const Avatar = () => {
 				/>
 			)}
 			<FloorRing />
-			<Suspense fallback={null}>
-				<EnergySegment />
-			</Suspense>
+			<EnergySegment />
 			<EnergyCapsule />
 		</>
 	)

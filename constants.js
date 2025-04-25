@@ -175,7 +175,7 @@ export const sideMainButtonConfig = [
 		position: new THREE.Vector3(0, 16.5, 10),
 		lookAt: new THREE.Vector3(0, 16.5, 0),
 		zoom: 2.8,
-		targetFov: 25,
+		targetFov: 23,
 		label: 'breath',
 	},
 	{

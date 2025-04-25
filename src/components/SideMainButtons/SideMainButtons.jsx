@@ -1,13 +1,16 @@
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { sideMainButtonConfig } from '../../../constants'
+import { setIsControlsBtnVisible } from '../../store/controls.slice'
 
 const SideMainButtons = ({
 	onButtonClick,
-	setIsControlsBtnVisible,
 	setBrainBtnClick,
 	setFaceBtnClick,
 	setBodyBtnClick,
 }) => {
+	const dispatch = useDispatch()
+
 	useEffect(() => {
 		const style = document.createElement('style')
 		style.textContent = `
@@ -79,7 +82,7 @@ const SideMainButtons = ({
 
 				container.addEventListener('click', () => {
 					onButtonClick(position, lookAt, zoom, targetFov)
-					setIsControlsBtnVisible(false)
+					dispatch(setIsControlsBtnVisible(false))
 
 					if (index === 0) {
 						setFaceBtnClick(true)

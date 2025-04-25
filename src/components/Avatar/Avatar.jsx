@@ -9,6 +9,11 @@ import { cameraFov, cameraPosition } from '../../../constants.js'
 import resetCamera from '../../utils/resetCamera'
 import BackButton from '../BackButton/BackButton'
 
+import { useDispatch, useSelector } from 'react-redux'
+import {
+	setIsBackBtnVisible,
+	setIsControlsBlocked,
+} from '../../store/controls.slice.js'
 import EnergyCapsule from '../EnergyCapsule/EnergyCapsule.jsx'
 import EnergySegment from '../EnergySegment/EnergySegment.jsx'
 import FloorRing from '../FloorRing/FloorRing'
@@ -22,11 +27,10 @@ const Avatar = () => {
 
 	const initialFov = cameraFov
 
-	const [controlsBlocked, setControlsBlocked] = useState(false)
+	const dispatch = useDispatch()
 
-	const [isBackBtnVisible, setIsBackBtnVisible] = useState(false)
-
-	const [isControlsBtnVisible, setIsControlsBtnVisible] = useState(true)
+	const { isControlsBlocked, isBackBtnVisible, isControlsBtnVisible } =
+		useSelector(state => state.controls)
 
 	const [brainBtnClick, setBrainBtnClick] = useState(false)
 	const [faceBtnClick, setFaceBtnClick] = useState(false)
@@ -35,11 +39,16 @@ const Avatar = () => {
 
 	const human = useLoader(OBJLoader, './models/Human.obj')
 
-	const cameraToFace = (targetPosition, targetLookAt, zoomLevel, targetFov) => {
+	const cameraToBodyPart = (
+		targetPosition,
+		targetLookAt,
+		zoomLevel,
+		targetFov
+	) => {
 		if (controlsRef.current) {
 			controlsRef.current.enabled = false
 		}
-		setIsBackBtnVisible(true)
+		dispatch(setIsBackBtnVisible(true))
 
 		gsap.killTweensOf(camera.position)
 		gsap.killTweensOf(camera)
@@ -57,7 +66,7 @@ const Avatar = () => {
 				}
 			},
 			onComplete: () => {
-				setControlsBlocked(true)
+				dispatch(setIsControlsBlocked(true))
 			},
 		})
 
@@ -85,11 +94,15 @@ const Avatar = () => {
 			initialTarget,
 			initialFov,
 			controlsRef,
-			setControlsBlocked,
+			dispatch,
 		})
 
 	useEffect(() => {
-		const skinMaterial = new THREE.MeshStandardMaterial({ color: 0xffcc99 })
+		const skinMaterial = new THREE.MeshStandardMaterial({
+			color: 0xffcc99,
+			// transparent: true,
+			// opacity: 0.5,
+		})
 
 		human.traverse(child => {
 			if (child.isMesh) {
@@ -109,7 +122,7 @@ const Avatar = () => {
 		<>
 			<OrbitControls
 				ref={controlsRef}
-				enabled={!controlsBlocked}
+				enabled={!isControlsBlocked}
 				enableZoom={false}
 				enablePan={false}
 				minDistance={20}
@@ -121,8 +134,6 @@ const Avatar = () => {
 
 			{isBackBtnVisible && (
 				<BackButton
-					setIsBackBtnVisible={setIsBackBtnVisible}
-					setIsControlsBtnVisible={setIsControlsBtnVisible}
 					onReset={resetCameraFunc}
 					setBrainBtnClick={setBrainBtnClick}
 					setFaceBtnClick={setFaceBtnClick}
@@ -132,8 +143,7 @@ const Avatar = () => {
 
 			{isControlsBtnVisible && (
 				<SideMainButtons
-					onButtonClick={cameraToFace}
-					setIsControlsBtnVisible={setIsControlsBtnVisible}
+					onButtonClick={cameraToBodyPart}
 					setBrainBtnClick={setBrainBtnClick}
 					setFaceBtnClick={setFaceBtnClick}
 					setBodyBtnClick={setBodyBtnClick}

@@ -1,13 +1,18 @@
 import { useEffect } from 'react'
-
-const BackButton = ({
+import { useDispatch } from 'react-redux'
+import {
 	setIsBackBtnVisible,
 	setIsControlsBtnVisible,
+} from '../../store/controls.slice'
+
+const BackButton = ({
 	onReset,
 	setBrainBtnClick,
 	setFaceBtnClick,
 	setBodyBtnClick,
 }) => {
+	const dispatch = useDispatch()
+
 	useEffect(() => {
 		const style = document.createElement('style')
 		style.textContent = `
@@ -37,8 +42,8 @@ const BackButton = ({
 			document.body.appendChild(button)
 
 			button.addEventListener('click', () => {
-				setIsBackBtnVisible(false)
-				setIsControlsBtnVisible(true)
+				dispatch(setIsBackBtnVisible(false))
+				dispatch(setIsControlsBtnVisible(true))
 				onReset()
 				setBrainBtnClick(false)
 				setFaceBtnClick(false)

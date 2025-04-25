@@ -31,15 +31,22 @@ const SceneCanvas = () => {
 	camera.position.copy(cameraPosition)
 
 	return (
-		<div style={{ position: 'relative', width: '100%', height: '100%' }}>
+		<div
+			style={{
+				position: 'relative',
+				width: '100%',
+				height: '100%',
+			}}
+		>
 			<Canvas
 				style={{
 					position: 'absolute',
 					top: '-35px',
 					left: '50%',
 					transform: 'translateX(-50%)',
-					width: '100%',
+					width: '20%',
 					height: '200px',
+					// zIndex: 99999,
 				}}
 			>
 				<Suspense fallback={null}>

@@ -6,12 +6,10 @@ const resetCamera = ({
 	initialTarget,
 	initialFov,
 	controlsRef,
-	setControlsBlocked,
+	dispatch,
 }) => {
-	// Создаем временный вектор для анимации target
 	const currentTarget = controlsRef.current.target.clone()
 
-	// Анимируем target отдельно
 	gsap.to(currentTarget, {
 		x: initialTarget.x,
 		y: initialTarget.y,
@@ -26,7 +24,6 @@ const resetCamera = ({
 		},
 	})
 
-	// Анимируем position камеры
 	gsap.to(camera.position, {
 		x: cameraPosition.x,
 		y: cameraPosition.y,
@@ -39,11 +36,10 @@ const resetCamera = ({
 			}
 		},
 		onComplete: () => {
-			setControlsBlocked(false)
+			dispatch({ type: 'controls/setIsControlsBlocked', payload: false })
 		},
 	})
 
-	// Анимируем FOV если это перспективная камера
 	if (camera.isPerspectiveCamera) {
 		gsap.to(camera, {
 			fov: initialFov,

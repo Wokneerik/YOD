@@ -57,6 +57,7 @@ const SceneCanvas = () => {
 			<Suspense fallback={null}>
 				<Account />
 				<StateCheck />
+
 				<CaloriesButton />
 				<StoreButton />
 			</Suspense>

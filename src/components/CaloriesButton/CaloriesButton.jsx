@@ -20,6 +20,8 @@ const CaloriesButton = () => {
 
 	const { showHealthConditionButton } = useSelector(state => state.stateCheck)
 
+	const { isControlsBtnVisible } = useSelector(state => state.controls)
+
 	const nutrientButtons = [
 		{ name: 'carbs', image: '/img/calories/carbs.png' },
 		{ name: 'fat', image: '/img/calories/fat.png' },
@@ -28,7 +30,7 @@ const CaloriesButton = () => {
 
 	return (
 		<>
-			{showHealthConditionButton && (
+			{showHealthConditionButton && isControlsBtnVisible && (
 				<div
 					className={`calories-button ${
 						isCaloriesOpen ? 'showing-calories-close' : 'showing-calories-btn'

@@ -1,13 +1,20 @@
 .button-container {
 	position: fixed;
-	bottom: 82px;
+	bottom: 20px;
 	left: 20px;
 	cursor: pointer;
 	z-index: 99998;
+	opacity: 0;
+	transform: scale(0.8);
+	animation: appear 0.3s ease 0.2s forwards;
+}
+
+.button-container::before {
+	transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
 .outer-circle {
-	position: fixed;
+	position: relative;
 	width: 58px;
 	height: 58px;
 	border: 1.5px solid white;
@@ -30,7 +37,7 @@
 }
 
 .small-circle {
-	position: fixed;
+	position: absolute;
 	width: 12px;
 	height: 12px;
 	background-color: rgba(55, 55, 55, 0.7);

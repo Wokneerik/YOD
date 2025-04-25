@@ -15,6 +15,8 @@ const StateCheck = () => {
 		state => state.stateCheck
 	)
 
+	const { isControlsBtnVisible } = useSelector(state => state.controls)
+
 	const [openStateScreen, setOpenStateScreen] = useState(false)
 	const sliderRef = useRef(null)
 	const smileyRef = useRef(null)
@@ -135,8 +137,8 @@ const StateCheck = () => {
 	const calculateSmallCirclePosition = () => {
 		const outerCircleRadius = 30
 		const angle = (180 - (stateCheck * 180) / 100) * (Math.PI / 180)
-		const baseX = 50
-		const baseY = 50
+		const baseX = 30
+		const baseY = 31
 		const offsetX = outerCircleRadius * Math.cos(angle)
 		const offsetY = outerCircleRadius * Math.sin(angle)
 
@@ -235,7 +237,7 @@ const StateCheck = () => {
 				</>
 			)}
 
-			{showHealthConditionButton && (
+			{showHealthConditionButton && isControlsBtnVisible && (
 				<>
 					<div className='button-container' onClick={handleButtonClick}>
 						<div className='outer-circle'>

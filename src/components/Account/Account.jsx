@@ -1,11 +1,6 @@
-import {
-	GoogleAuthProvider,
-	getAuth,
-	onAuthStateChanged,
-	signInWithPopup,
-	signOut,
-} from 'firebase/auth'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { useEffect, useState } from 'react'
+import { UserAuth } from '../../context/AuthContext'
 import './style.css'
 
 const Account = () => {
@@ -13,6 +8,18 @@ const Account = () => {
 	const [user, setUser] = useState(null)
 	const [loading, setLoading] = useState(false)
 	const [showSignOut, setShowSignOut] = useState(false)
+
+	const { googleSignIn } = UserAuth()
+
+	const handleGoogleSignIn = async () => {
+		try {
+			setLoading(true)
+			await googleSignIn()
+		} catch (error) {
+			console.error('Error signing in with Google:', error)
+			setLoading(false)
+		}
+	}
 
 	// Initialize auth on component mount
 	useEffect(() => {
@@ -32,19 +39,6 @@ const Account = () => {
 			setShowSignOut(false)
 		} else {
 			setShowSignOut(false)
-		}
-	}
-
-	const handleGoogleSignIn = async () => {
-		try {
-			setLoading(true)
-			const auth = getAuth()
-			const provider = new GoogleAuthProvider()
-			await signInWithPopup(auth, provider)
-			setOpenAccPage(false) // Close overlay after successful sign-in
-		} catch (error) {
-			console.error('Error signing in with Google:', error)
-			setLoading(false)
 		}
 	}
 
@@ -106,9 +100,15 @@ const Account = () => {
 				{loading ? (
 					<div className='loading-spinner'></div>
 				) : showSignOut ? (
-					<button className='sign-out-button' onClick={handleSignOut}>
-						Sign Out
-					</button>
+					<>
+						<button
+							className={`sign-out-button ${showSignOut ? 'active' : ''}`}
+							onClick={handleSignOut}
+						></button>
+						<div className={`sign-out-label ${showSignOut ? 'active' : ''}`}>
+							Sign Out
+						</div>
+					</>
 				) : !user && openAccPage ? (
 					<button className='google-auth-button' onClick={handleGoogleSignIn}>
 						<span className='google-icon'></span>

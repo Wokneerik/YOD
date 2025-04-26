@@ -5,7 +5,7 @@ import { setIsControlsBtnVisible } from '../../store/controls.slice'
 
 const SideMainButtons = ({
 	onButtonClick,
-	setBrainBtnClick,
+	setBreathBtnClick,
 	setFaceBtnClick,
 	setBodyBtnClick,
 }) => {
@@ -89,7 +89,7 @@ const SideMainButtons = ({
 					}
 
 					if (index === 1) {
-						setBrainBtnClick(true)
+						setBreathBtnClick(true)
 					}
 
 					if (index === 2) {

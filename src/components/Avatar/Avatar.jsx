@@ -32,7 +32,7 @@ const Avatar = () => {
 	const { isControlsBlocked, isBackBtnVisible, isControlsBtnVisible } =
 		useSelector(state => state.controls)
 
-	const [brainBtnClick, setBrainBtnClick] = useState(false)
+	const [breathBtnClick, setBreathBtnClick] = useState(false)
 	const [faceBtnClick, setFaceBtnClick] = useState(false)
 
 	const [bodyBtnClick, setBodyBtnClick] = useState(false)
@@ -135,7 +135,7 @@ const Avatar = () => {
 			{isBackBtnVisible && (
 				<BackButton
 					onReset={resetCameraFunc}
-					setBrainBtnClick={setBrainBtnClick}
+					setBreathBtnClick={setBreathBtnClick}
 					setFaceBtnClick={setFaceBtnClick}
 					setBodyBtnClick={setBodyBtnClick}
 				/>
@@ -144,7 +144,7 @@ const Avatar = () => {
 			{isControlsBtnVisible && (
 				<SideMainButtons
 					onButtonClick={cameraToBodyPart}
-					setBrainBtnClick={setBrainBtnClick}
+					setBreathBtnClick={setBreathBtnClick}
 					setFaceBtnClick={setFaceBtnClick}
 					setBodyBtnClick={setBodyBtnClick}
 				/>

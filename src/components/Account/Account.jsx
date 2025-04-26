@@ -106,7 +106,7 @@ const Account = () => {
 							onClick={handleSignOut}
 						></button>
 						<div className={`sign-out-label ${showSignOut ? 'active' : ''}`}>
-							Sign Out
+							Log Out
 						</div>
 					</>
 				) : !user && openAccPage ? (

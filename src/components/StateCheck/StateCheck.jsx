@@ -298,7 +298,7 @@ const StateCheck = () => {
            C 175 50, 150 30, 120 30 Z'
 											fill='none'
 											stroke='white'
-											stroke-width='3'
+											strokeWidth={3}
 											stroke-dasharray='5 5'
 										/>
 									</svg>

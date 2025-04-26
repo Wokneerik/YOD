@@ -1,15 +1,14 @@
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
+import { getAuth, signOut } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import { UserAuth } from '../../context/AuthContext'
 import './style.css'
 
 const Account = () => {
 	const [openAccPage, setOpenAccPage] = useState(false)
-	const [user, setUser] = useState(null)
 	const [loading, setLoading] = useState(false)
 	const [showSignOut, setShowSignOut] = useState(false)
 
-	const { googleSignIn } = UserAuth()
+	const { googleSignIn, user } = UserAuth()
 
 	const handleGoogleSignIn = async () => {
 		try {
@@ -21,16 +20,24 @@ const Account = () => {
 		}
 	}
 
-	// Initialize auth on component mount
+	// Handle redirect result on component mount
 	useEffect(() => {
 		const auth = getAuth()
-		const unsubscribe = onAuthStateChanged(auth, currentUser => {
-			setUser(currentUser)
-			setLoading(false)
-		})
+		const handleRedirectResult = async () => {
+			try {
+				setLoading(true)
+				const result = await getRedirectResult(auth)
+				if (result) {
+					console.log('Successfully signed in after redirect')
+				}
+			} catch (error) {
+				console.error('Error with redirect result:', error)
+			} finally {
+				setLoading(false)
+			}
+		}
 
-		// Cleanup subscription on unmount
-		return () => unsubscribe()
+		handleRedirectResult()
 	}, [])
 
 	const handleButtonClick = () => {
@@ -51,6 +58,7 @@ const Account = () => {
 			setOpenAccPage(false)
 		} catch (error) {
 			console.error('Error signing out:', error)
+		} finally {
 			setLoading(false)
 		}
 	}

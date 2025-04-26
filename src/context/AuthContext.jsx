@@ -1,7 +1,7 @@
 import {
 	GoogleAuthProvider,
 	onAuthStateChanged,
-	signInWithPopup,
+	signInWithRedirect,
 	signOut,
 } from 'firebase/auth'
 import { createContext, useContext, useEffect, useState } from 'react'
@@ -11,27 +11,29 @@ const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
 	const [user, setUser] = useState({})
+	const [loading, setLoading] = useState(true)
 
 	const googleSignIn = () => {
 		const provider = new GoogleAuthProvider()
-		signInWithPopup(auth, provider)
+		return signInWithRedirect(auth, provider)
 	}
 
 	const logOut = () => {
-		signOut(auth)
+		return signOut(auth)
 	}
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, currentUser => {
 			setUser(currentUser)
+			setLoading(false)
 		})
 		return () => {
-			unsubscribe
+			unsubscribe()
 		}
-	})
+	}, [])
 
 	return (
-		<AuthContext.Provider value={{ googleSignIn, logOut, user }}>
+		<AuthContext.Provider value={{ googleSignIn, logOut, user, loading }}>
 			{children}
 		</AuthContext.Provider>
 	)

@@ -33,7 +33,7 @@ const HeightWeight = () => {
 			{/* Bottom Navigation */}
 			<div className='height-weight-bottom-nav'>
 				<div className='flex justify-center'>
-					<Link to='/height-weight' className='next-button'>
+					<Link to='/goal' className='next-button'>
 						NEXT
 					</Link>
 				</div>

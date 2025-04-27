@@ -1,5 +1,6 @@
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 import './style.css'
 
@@ -8,13 +9,25 @@ const Account = () => {
 	const [user, setUser] = useState(null)
 	const [loading, setLoading] = useState(false)
 	const [showSignOut, setShowSignOut] = useState(false)
+	const [isNewUser, setIsNewUser] = useState(false)
+	const navigate = useNavigate()
 
 	const { googleSignIn } = UserAuth()
 
 	const handleGoogleSignIn = async () => {
 		try {
 			setLoading(true)
-			await googleSignIn()
+			const result = await googleSignIn()
+
+			// Check if this is a new user (just registered)
+			if (
+				result?.user?.metadata?.creationTime ===
+				result?.user?.metadata?.lastSignInTime
+			) {
+				setIsNewUser(true)
+				// Store in localStorage that this is a new registration
+				localStorage.setItem('isNewRegistration', 'true')
+			}
 		} catch (error) {
 			console.error('Error signing in with Google:', error)
 			setLoading(false)
@@ -27,11 +40,22 @@ const Account = () => {
 		const unsubscribe = onAuthStateChanged(auth, currentUser => {
 			setUser(currentUser)
 			setLoading(false)
+
+			// Check if this is a new registration and redirect if needed
+			const isNewRegistration =
+				localStorage.getItem('isNewRegistration') === 'true'
+
+			if (currentUser && isNewRegistration) {
+				// Clear the flag
+				localStorage.removeItem('isNewRegistration')
+				// Redirect to welcome page
+				navigate('/welcome')
+			}
 		})
 
 		// Cleanup subscription on unmount
 		return () => unsubscribe()
-	}, [])
+	}, [navigate])
 
 	const handleButtonClick = () => {
 		setOpenAccPage(prev => !prev)

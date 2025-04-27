@@ -78,7 +78,7 @@ const Goal = () => {
 			{/* Bottom Navigation */}
 			<div className='goal-bottom-nav'>
 				<div className='flex justify-center'>
-					<Link to='/height-weight' className='next-button'>
+					<Link to='/skin-color' className='next-button'>
 						NEXT
 					</Link>
 				</div>

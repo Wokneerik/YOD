@@ -6,6 +6,7 @@ import { AuthContextProvider } from './context/AuthContext.jsx'
 import Goal from './pages/Goal/Goal.jsx'
 import HeightWeight from './pages/HeightWeight/HeightWeight.jsx'
 import Sex from './pages/Sex/Sex.jsx'
+import SkinColor from './pages/SkinColor/SkinColor.jsx'
 import Welcome from './pages/Welcome/Welcome.jsx'
 
 const Scene = React.lazy(() =>
@@ -28,8 +29,10 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/welcome' element={<Welcome />} />
 					<Route path='/sex' element={<Sex />} />
-					<Route path='/goal' element={<Goal />} />
 					<Route path='/height-weight' element={<HeightWeight />} />
+					<Route path='/goal' element={<Goal />} />
+
+					<Route path='/skin-color' element={<SkinColor />} />
 				</Routes>
 			</BrowserRouter>
 		</AuthContextProvider>

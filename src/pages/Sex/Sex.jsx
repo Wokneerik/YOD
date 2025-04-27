@@ -1,8 +1,9 @@
 import { Mars, Venus } from 'lucide-react'
 import React, { useState } from 'react'
-import ProgressBar from '../../components/ProgressBar/ProgressBar'
+import { Link } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
 import Button from '../../components/ui/Button/Button'
+import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
 import './styles.css'
 
 const Sex = () => {
@@ -15,7 +16,7 @@ const Sex = () => {
 				<div>
 					<BackButton />
 				</div>
-				<ProgressBar progress={30} />
+				<ProgressBar progress={25} />
 			</div>
 
 			{/* Main Content */}
@@ -60,9 +61,9 @@ const Sex = () => {
 			{/* Bottom Navigation */}
 			<div className='sex-bottom-nav'>
 				<div className='flex justify-center'>
-					<button className='next-button' onClick={() => {}}>
+					<Link to='/height-weight' className='next-button'>
 						NEXT
-					</button>
+					</Link>
 				</div>
 			</div>
 		</div>

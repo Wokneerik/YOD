@@ -1,10 +1,10 @@
-.sex-container {
+.height-weight-container {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
 }
 
-.sex-header {
+.height-weight-header {
 	position: sticky;
 	top: 0;
 	z-index: 10;
@@ -15,14 +15,14 @@
 	justify-content: space-between;
 }
 
-.sex-header > *:nth-child(2) {
+.height-weight-header > *:nth-child(2) {
 	flex-grow: 1;
 	margin-left: 2rem;
 	margin-right: auto;
 	max-width: 70%;
 }
 
-.sex-main-content {
+.height-weight-main-content {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -33,7 +33,7 @@
 	padding-right: 1.5rem;
 }
 
-.sex-title {
+.height-weight-title {
 	font-size: 1.7rem;
 	font-weight: 600;
 	color: #333;
@@ -41,7 +41,7 @@
 	text-align: center;
 }
 
-.sex-button-container {
+.height-weight-input-container {
 	width: 100%;
 	max-width: 28rem;
 	display: flex;
@@ -50,46 +50,15 @@
 	margin-top: 2rem;
 }
 
-.sex-button-container > * {
+.height-weight-input-container > * {
 	margin-bottom: 1rem;
 	width: 100%;
 }
 
-.icon-sex {
-	padding: 5px;
-	margin-right: 20px;
-	border-radius: 50px;
-	background-color: #f6f6f6;
-}
-
-.sex-text {
-	font-size: 0.875rem;
-	color: #666;
-	text-align: center;
-	max-width: 32rem;
-}
-
-.sex-bottom-nav {
+.height-weight-bottom-nav {
 	position: sticky;
 	bottom: 0;
 	z-index: 10;
 	border-top: 1.5px solid #ffffff;
 	padding: 1rem;
-}
-
-.next-button {
-	width: 100%;
-	border-radius: 50px;
-	max-width: 28rem;
-	padding-top: 0.75rem;
-	padding-bottom: 0.75rem;
-	background-color: #ffeaff;
-	font-size: 16px;
-	font-weight: 600;
-	color: #333;
-	text-decoration: none;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	border: none;
 }

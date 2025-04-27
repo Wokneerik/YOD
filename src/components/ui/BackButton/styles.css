@@ -1,0 +1,9 @@
+.ui-back-button {
+	padding: 4px;
+	background-color: #f2f2f7;
+	border-radius: 20px;
+	border: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

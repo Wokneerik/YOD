@@ -1,0 +1,91 @@
+.sex-container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.sex-header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	border-bottom: 1.5px solid #ffffff;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.sex-header > *:nth-child(2) {
+	flex-grow: 1;
+	margin-left: 2rem;
+	margin-right: auto;
+	max-width: 70%;
+}
+
+.sex-main-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	padding-top: 4rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+.sex-title {
+	font-size: 2rem;
+	font-weight: 600;
+	color: #333;
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.sex-button-container {
+	width: 100%;
+	max-width: 28rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 2rem;
+}
+
+.sex-button-container > * {
+	margin-bottom: 1rem;
+	width: 100%;
+}
+
+.icon-sex {
+	padding: 5px;
+	margin-right: 20px;
+	border-radius: 50px;
+	background-color: #f6f6f6;
+}
+
+.sex-text {
+	font-size: 0.875rem;
+	color: #666;
+	text-align: center;
+	max-width: 32rem;
+}
+
+.sex-bottom-nav {
+	position: sticky;
+	bottom: 0;
+	z-index: 10;
+	border-top: 1.5px solid #ffffff;
+	padding: 1rem;
+}
+
+.next-button {
+	width: 100%;
+	border-radius: 50px;
+	max-width: 28rem;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+	background-color: #ffeaff;
+	font-size: 16px;
+	font-weight: 600;
+	color: #333;
+	border: none;
+}

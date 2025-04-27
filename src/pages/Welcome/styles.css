@@ -1,0 +1,64 @@
+.welcome-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	min-height: 100vh;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	background-color: rgb(255, 255, 255);
+}
+
+.welcome-text {
+	font-size: 2em;
+	font-weight: 500;
+	margin-bottom: 20px;
+	margin-top: 50px;
+	text-align: center;
+	z-index: 1;
+	color: black;
+}
+
+.canvas-container {
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 0;
+}
+
+.personalize-text {
+	font-size: 1.2em;
+	margin-bottom: 30px;
+	text-align: center;
+	z-index: 1;
+	color: black;
+}
+
+.description-text {
+	font-size: 0.7em;
+	color: #555;
+	line-height: 1.6;
+	margin-bottom: 30px;
+	text-align: center;
+	padding: 0 40px;
+}
+
+.start-button {
+	padding: 10px 90px;
+	margin-top: 10px;
+	font-size: 1em;
+	font-weight: 600;
+	text-decoration: none;
+	color: white;
+	background-color: #ffeaff;
+	border: none;
+	border-radius: 50px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	z-index: 1;
+	color: rgb(20, 20, 20);
+}
+
+.start-button:hover {
+	background-color: #c2f2f8;
+}

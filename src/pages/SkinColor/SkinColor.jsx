@@ -1,21 +1,30 @@
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import * as THREE from 'three'
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
 
 import { Environment, OrbitControls } from '@react-three/drei'
+import { getAuth } from 'firebase/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
 import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
+import {
+	saveUserDataToFirestore,
+	setSkinColor,
+} from '../../store/user-data.slice'
 import './styles.css'
 
 const SkinColor = () => {
-	const [skinColor, setSkinColor] = useState('#F2C48F')
+	const [selectedSkinColor, setSelectedSkinColor] = useState('#F2C48F')
 
-	const handleColorChange = color => {
-		setSkinColor(color)
-	}
+	const navigate = useNavigate()
+
+	const isFormValid = selectedSkinColor !== ''
+
+	const dispatch = useDispatch()
 
 	const skinColors = [
 		'#F4D4BB',
@@ -25,6 +34,40 @@ const SkinColor = () => {
 		'#845225',
 		'#2F1E11',
 	]
+
+	const auth = getAuth()
+
+	const { skinColor: savedSkinColor } = useSelector(state => state.userData)
+
+	const currentUser = auth.currentUser
+
+	useEffect(() => {
+		// If no user is logged in, redirect to sign in
+
+		// if (!currentUser) {
+		//   navigate('/');
+		// }
+
+		// If there's saved sex in Redux, use it
+		if (savedSkinColor) {
+			setSelectedSkinColor(savedSkinColor)
+		}
+	}, [currentUser, savedSkinColor])
+
+	const handleSkinColorSelection = skinColor => {
+		setSelectedSkinColor(skinColor)
+		dispatch(setSkinColor(skinColor))
+
+		// Save to Firestore if user is authenticated
+		if (currentUser) {
+			dispatch(
+				saveUserDataToFirestore({
+					userId: currentUser.uid,
+					userData: { skinColor },
+				})
+			)
+		}
+	}
 
 	return (
 		<div className='skin-color-container'>
@@ -61,7 +104,7 @@ const SkinColor = () => {
 
 					{/* Add environment lighting for better realism */}
 					<Environment preset='studio' />
-					<SceneContent skinColor={skinColor} />
+					<SceneContent skinColor={selectedSkinColor} />
 
 					<OrbitControls
 						minPolarAngle={Math.PI / 3}
@@ -79,9 +122,9 @@ const SkinColor = () => {
 					{skinColors.map(color => (
 						<button
 							key={color}
-							onClick={() => handleColorChange(color)}
+							onClick={() => handleSkinColorSelection(color)}
 							className={`color-button ${
-								skinColor === color ? 'selected' : ''
+								selectedSkinColor === color ? 'selected' : ''
 							}`}
 							style={{
 								backgroundColor: color,
@@ -93,7 +136,15 @@ const SkinColor = () => {
 
 			{/* Bottom Navigation */}
 
-			<BottomNavigation link={'/'} />
+			<BottomNavigation
+				disabled={!isFormValid}
+				onClick={() => {
+					if (isFormValid) {
+						saveUserDataToFirestore()
+						navigate('/')
+					}
+				}}
+			/>
 		</div>
 	)
 }

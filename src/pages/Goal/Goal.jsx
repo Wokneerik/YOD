@@ -1,15 +1,57 @@
+import { getAuth } from 'firebase/auth'
 import { BicepsFlexed, MoveDownRight, RulerDimensionLine } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
 import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import Button from '../../components/ui/Button/Button'
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
+import { saveUserDataToFirestore, setGoal } from '../../store/user-data.slice'
 import './styles.css'
 
 const Goal = () => {
 	const [selectedGaol, setSelectedGoal] = useState('')
 
+	const navigate = useNavigate()
+
 	const isFormValid = selectedGaol !== ''
+
+	const dispatch = useDispatch()
+
+	const auth = getAuth()
+
+	const { goal: savedGoal } = useSelector(state => state.userData)
+
+	const currentUser = auth.currentUser
+
+	useEffect(() => {
+		// If no user is logged in, redirect to sign in
+
+		// if (!currentUser) {
+		//   navigate('/');
+		// }
+
+		// If there's saved sex in Redux, use it
+		if (savedGoal) {
+			setSelectedGoal(savedGoal)
+		}
+	}, [currentUser, savedGoal])
+
+	const handleGoalSelection = goal => {
+		setSelectedGoal(goal)
+		dispatch(setGoal(goal))
+
+		// Save to Firestore if user is authenticated
+		if (currentUser) {
+			dispatch(
+				saveUserDataToFirestore({
+					userId: currentUser.uid,
+					userData: { goal },
+				})
+			)
+		}
+	}
 
 	return (
 		<div className='goal-container'>
@@ -38,7 +80,7 @@ const Goal = () => {
 								Bulk
 							</>
 						}
-						onClick={() => setSelectedGoal('bulk')}
+						onClick={() => handleGoalSelection('bulk')}
 					/>
 					<Button
 						color={selectedGaol === 'cut' ? '#c2f2f8' : 'white'}
@@ -52,7 +94,7 @@ const Goal = () => {
 								Cut
 							</>
 						}
-						onClick={() => setSelectedGoal('cut')}
+						onClick={() => handleGoalSelection('cut')}
 					/>
 
 					<Button
@@ -67,7 +109,7 @@ const Goal = () => {
 								Maintain
 							</>
 						}
-						onClick={() => setSelectedGoal('maintain')}
+						onClick={() => handleGoalSelection('maintain')}
 					/>
 				</div>
 
@@ -78,7 +120,16 @@ const Goal = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-			<BottomNavigation link={'/skin-color'} disabled={!isFormValid} />
+
+			<BottomNavigation
+				disabled={!isFormValid}
+				onClick={() => {
+					if (isFormValid) {
+						saveUserDataToFirestore()
+						navigate('/skin-color')
+					}
+				}}
+			/>
 		</div>
 	)
 }

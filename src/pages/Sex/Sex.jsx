@@ -2,6 +2,7 @@ import { getAuth } from 'firebase/auth'
 import { Mars, Venus } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
 import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import Button from '../../components/ui/Button/Button'
@@ -11,6 +12,8 @@ import './styles.css'
 
 const Sex = () => {
 	const [selectedSex, setSelectedSex] = useState('')
+
+	const navigate = useNavigate()
 
 	const isFormValid = selectedSex !== ''
 
@@ -33,7 +36,7 @@ const Sex = () => {
 		if (savedSex) {
 			setSelectedSex(savedSex)
 		}
-	}, [savedSex])
+	}, [currentUser, savedSex])
 
 	const handleSexSelection = sex => {
 		setSelectedSex(sex)
@@ -100,7 +103,15 @@ const Sex = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-			<BottomNavigation link={'/height-weight'} disabled={!isFormValid} />
+			<BottomNavigation
+				disabled={!isFormValid}
+				onClick={() => {
+					if (isFormValid) {
+						saveUserDataToFirestore()
+						navigate('/height-weight')
+					}
+				}}
+			/>
 		</div>
 	)
 }

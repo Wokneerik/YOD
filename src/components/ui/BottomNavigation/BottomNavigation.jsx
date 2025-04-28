@@ -1,8 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
 import './styles.css'
 
-const BottomNavigation = ({ link, disabled = false }) => {
+const BottomNavigation = ({ link, disabled = false, onClick }) => {
 	return (
 		<div className='bottom-nav'>
 			{disabled ? (
@@ -10,9 +8,9 @@ const BottomNavigation = ({ link, disabled = false }) => {
 					NEXT
 				</button>
 			) : (
-				<Link to={link} className='next-button'>
+				<button className='next-button' onClick={onClick}>
 					NEXT
-				</Link>
+				</button>
 			)}
 		</div>
 	)

@@ -1,7 +1,7 @@
 import { BicepsFlexed, MoveDownRight, RulerDimensionLine } from 'lucide-react'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
+import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import Button from '../../components/ui/Button/Button'
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
 import './styles.css'
@@ -76,13 +76,7 @@ const Goal = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-			<div className='goal-bottom-nav'>
-				<div className='flex justify-center'>
-					<Link to='/skin-color' className='next-button'>
-						NEXT
-					</Link>
-				</div>
-			</div>
+			<BottomNavigation link={'/skin-color'} />
 		</div>
 	)
 }

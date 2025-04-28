@@ -3,7 +3,7 @@ import BackButton from '../../components/ui/BackButton/BackButton'
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
 
 import { Ruler, Weight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import InputForm from '../../components/ui/InputForm/InputForm'
 import './styles.css'
 
@@ -31,13 +31,7 @@ const HeightWeight = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-			<div className='height-weight-bottom-nav'>
-				<div className='flex justify-center'>
-					<Link to='/goal' className='next-button'>
-						NEXT
-					</Link>
-				</div>
-			</div>
+			<BottomNavigation link={'/goal'} />
 		</div>
 	)
 }

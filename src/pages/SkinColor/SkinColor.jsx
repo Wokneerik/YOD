@@ -1,6 +1,5 @@
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import * as THREE from 'three'
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
@@ -8,6 +7,7 @@ import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
 
 import { Environment, OrbitControls } from '@react-three/drei'
 import BackButton from '../../components/ui/BackButton/BackButton'
+import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import './styles.css'
 
 const SkinColor = () => {
@@ -90,13 +90,8 @@ const SkinColor = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-			<div className='skin-color-bottom-nav'>
-				<div className='flex justify-center'>
-					<Link to='/' className='next-button'>
-						NEXT
-					</Link>
-				</div>
-			</div>
+
+			<BottomNavigation link={'/'} />
 		</div>
 	)
 }

@@ -1,7 +1,7 @@
 import { Mars, Venus } from 'lucide-react'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
+import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import Button from '../../components/ui/Button/Button'
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
 import './styles.css'
@@ -59,13 +59,7 @@ const Sex = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-			<div className='sex-bottom-nav'>
-				<div className='flex justify-center'>
-					<Link to='/height-weight' className='next-button'>
-						NEXT
-					</Link>
-				</div>
-			</div>
+			<BottomNavigation link={'/height-weight'} />
 		</div>
 	)
 }

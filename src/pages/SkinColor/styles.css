@@ -57,14 +57,6 @@
 	max-width: 32rem;
 }
 
-.skin-color-bottom-nav {
-	position: sticky;
-	bottom: 0;
-	z-index: 10;
-	border-top: 1.5px solid #ffffff;
-	padding: 1rem;
-}
-
 .color-palette {
 	display: flex;
 	flex-wrap: wrap;

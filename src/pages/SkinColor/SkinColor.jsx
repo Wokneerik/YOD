@@ -80,7 +80,9 @@ const SkinColor = () => {
 						<button
 							key={color}
 							onClick={() => handleColorChange(color)}
-							className='color-button'
+							className={`color-button ${
+								skinColor === color ? 'selected' : ''
+							}`}
 							style={{
 								backgroundColor: color,
 							}}

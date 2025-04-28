@@ -59,29 +59,27 @@
 
 .color-palette {
 	display: flex;
-	flex-wrap: wrap;
-	width: 60%;
-	justify-content: center;
-	margin-top: 5px;
+	overflow-x: auto;
+	padding: 10px;
 }
 
 .color-button {
-	width: 40px;
-	height: 40px;
+	width: 35px;
+	height: 35px;
 	border-radius: 50%;
-	margin: 8px;
+	margin-right: 15px;
 	border: 2px solid transparent;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 	transition: all 0.2s ease;
+	flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+
+/* Remove margin from the very last button */
+.color-button:last-child {
+	margin-right: 0;
 }
 
 .color-button:hover {
-	transform: scale(1.1);
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.color-button:active {
-	transform: scale(0.9);
-	box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+	transform: scale(1.3);
 }

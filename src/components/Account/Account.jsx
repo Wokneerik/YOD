@@ -8,7 +8,7 @@ const Account = () => {
 	const [openAccPage, setOpenAccPage] = useState(false)
 	const [user, setUser] = useState(null)
 	const [loading, setLoading] = useState(false)
-	const [showSignOut, setShowSignOut] = useState(false)
+
 	const [isNewUser, setIsNewUser] = useState(false)
 	const navigate = useNavigate()
 
@@ -60,9 +60,6 @@ const Account = () => {
 	const handleButtonClick = () => {
 		setOpenAccPage(prev => !prev)
 		if (user && !openAccPage) {
-			setShowSignOut(false)
-		} else {
-			setShowSignOut(false)
 		}
 	}
 
@@ -71,17 +68,11 @@ const Account = () => {
 			setLoading(true)
 			const auth = getAuth()
 			await signOut(auth)
-			setShowSignOut(false)
+
 			setOpenAccPage(false)
 		} catch (error) {
 			console.error('Error signing out:', error)
 			setLoading(false)
-		}
-	}
-
-	const handleLeftButtonClick = () => {
-		if (user) {
-			setShowSignOut(prev => !prev)
 		}
 	}
 
@@ -105,7 +96,6 @@ const Account = () => {
 								user.photoURL || '/img/buttons/user.png'
 							})`,
 						}}
-						onClick={handleLeftButtonClick}
 					></div>
 					<div
 						className={`user-name-label ${openAccPage ? 'active' : ''}`}
@@ -115,24 +105,28 @@ const Account = () => {
 					>
 						{user.displayName?.split(' ')[0] || 'User'}
 					</div>
+
+					<div
+						className={`sign-out-button ${openAccPage ? 'active' : ''}`}
+						style={{
+							zIndex: openAccPage ? 999999 : 9989,
+						}}
+						onClick={handleSignOut}
+					></div>
+					<div
+						className={`sign-out-label ${openAccPage ? 'active' : ''}`}
+						style={{
+							zIndex: openAccPage ? 999999 : 9989,
+						}}
+					>
+						Log Out
+					</div>
 				</>
 			)}
 
-			<div
-				className={`acc-overlay ${openAccPage || showSignOut ? 'active' : ''}`}
-			>
+			<div className={`acc-overlay ${openAccPage ? 'active' : ''}`}>
 				{loading ? (
 					<div className='loading-spinner'></div>
-				) : showSignOut ? (
-					<>
-						<button
-							className={`sign-out-button ${showSignOut ? 'active' : ''}`}
-							onClick={handleSignOut}
-						></button>
-						<div className={`sign-out-label ${showSignOut ? 'active' : ''}`}>
-							Log Out
-						</div>
-					</>
 				) : !user && openAccPage ? (
 					<button className='google-auth-button' onClick={handleGoogleSignIn}>
 						<span className='google-icon'></span>

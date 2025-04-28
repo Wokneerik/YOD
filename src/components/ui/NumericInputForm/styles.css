@@ -1,0 +1,59 @@
+.input-wrapper {
+	position: relative;
+	width: 100%;
+	margin-bottom: 1rem; /* Add some space below each input wrapper */
+}
+
+.input-field-container {
+	display: flex;
+	align-items: center;
+	position: relative; /* Needed for absolute positioning of icon and measured-as */
+}
+
+.input-icon {
+	position: absolute;
+	left: 10px;
+	z-index: 1;
+}
+
+.ui-input {
+	padding: 15px 20px 15px 42px;
+	border: 1px solid rgb(150, 150, 150);
+	border-radius: 10px;
+	color: #333;
+	font-size: 16px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	background-color: white;
+	width: 100%;
+}
+
+.measured-as {
+	position: absolute;
+	right: 10px;
+	color: #777;
+	font-size: 14px;
+	pointer-events: none;
+}
+
+.input-form-field:focus {
+	border-color: #c2f2f8;
+}
+
+.input-error {
+	border-color: #ff6b6b;
+}
+
+.input-error-message {
+	color: #ff6b6b;
+	font-size: 0.75rem;
+	margin-top: 0.25rem;
+	display: block; /* Ensure the error message takes up its own line */
+	width: 100%; /* Make it span the width */
+}
+
+/* Form styling */
+.height-weight-form {
+	width: 100%;
+}

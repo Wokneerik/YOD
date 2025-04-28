@@ -9,6 +9,8 @@ import './styles.css'
 const Goal = () => {
 	const [selectedGaol, setSelectedGoal] = useState('')
 
+	const isFormValid = selectedGaol !== ''
+
 	return (
 		<div className='goal-container'>
 			{/* Header */}
@@ -76,7 +78,7 @@ const Goal = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-			<BottomNavigation link={'/skin-color'} />
+			<BottomNavigation link={'/skin-color'} disabled={!isFormValid} />
 		</div>
 	)
 }

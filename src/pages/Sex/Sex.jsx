@@ -9,6 +9,8 @@ import './styles.css'
 const Sex = () => {
 	const [selectedSex, setSelectedSex] = useState('')
 
+	const isFormValid = selectedSex !== ''
+
 	return (
 		<div className='sex-container'>
 			{/* Header */}
@@ -59,7 +61,7 @@ const Sex = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-			<BottomNavigation link={'/height-weight'} />
+			<BottomNavigation link={'/height-weight'} disabled={!isFormValid} />
 		</div>
 	)
 }

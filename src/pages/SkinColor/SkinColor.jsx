@@ -43,7 +43,7 @@ const SkinColor = () => {
 				<Canvas
 					style={{
 						width: '100%',
-						height: '250px',
+						height: '220px',
 					}}
 					camera={{ position: [0, 28, 7], fov: 45 }}
 				>

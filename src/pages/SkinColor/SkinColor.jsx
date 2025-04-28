@@ -28,7 +28,7 @@ const SkinColor = () => {
 
 	const skinColors = [
 		'#F4D4BB',
-		'#F2C48F',
+		'#FFCC99',
 		'#D19554',
 		'#AE703A',
 		'#845225',

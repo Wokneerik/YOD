@@ -39,6 +39,8 @@ const Avatar = () => {
 
 	const human = useLoader(OBJLoader, './models/Human.obj')
 
+	const { skinColor } = useSelector(state => state.userData)
+
 	const cameraToBodyPart = (
 		targetPosition,
 		targetLookAt,
@@ -99,7 +101,7 @@ const Avatar = () => {
 
 	useEffect(() => {
 		const skinMaterial = new THREE.MeshStandardMaterial({
-			color: 0xffcc99,
+			color: skinColor ? skinColor : 0xffcc99,
 			// transparent: true,
 			// opacity: 0.5,
 		})

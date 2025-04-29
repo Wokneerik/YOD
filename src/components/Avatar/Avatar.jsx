@@ -117,7 +117,12 @@ const Avatar = () => {
 	useEffect(() => {
 		human.traverse(child => {
 			if (child.isMesh) {
-				child.material.color.set(skinColor ? skinColor : defaultSkinColor)
+				child.material = new THREE.MeshStandardMaterial({
+					color: skinColor,
+					roughness: 0.9, // More skin-like roughness
+					metalness: 0.1, // Very slight sheen
+					envMapIntensity: 0.4,
+				})
 			}
 		})
 

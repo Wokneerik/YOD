@@ -67,9 +67,27 @@ const SceneCanvas = () => {
 				<ambientLight color={0x404040} intensity={1} />
 				<directionalLight
 					color={0xffffff}
-					intensity={0.6}
-					position={[300, 0, 200]}
+					intensity={0.5}
+					position={[0, 3, 5]}
 					castShadow
+				/>
+
+				{/* <directionalLight
+					color={0xffffff}
+					intensity={0.2}
+					position={[5, -7, 10]}
+					castShadow
+				/> */}
+
+				<directionalLight
+					position={[3, 3, -5]}
+					intensity={1.3}
+					color={'#ed92ed'}
+				/>
+				<directionalLight
+					position={[-3, 3, -5]}
+					intensity={1.3}
+					color={'#5adbec'}
 				/>
 				<hemisphereLight
 					skyColor={0xffffff}

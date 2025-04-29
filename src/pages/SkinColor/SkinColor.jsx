@@ -31,8 +31,8 @@ const SkinColor = () => {
 		'#F5C6A5',
 		'#D19554',
 		'#AE703A',
-		'#845225',
-		'#2F1E11',
+		'#503018',
+		'#2f2217',
 	]
 
 	const auth = getAuth()

@@ -66,13 +66,6 @@ const HeightWeight = () => {
 		dispatch(setHeight(values.height))
 		dispatch(setWeight(values.weight))
 
-		console.log(
-			'CHECK HEIGHT AND WEIGHT,',
-			values.height,
-			'WEIGHT,',
-			values.weight
-		)
-
 		// Save to Firestore if user is authenticated
 		if (currentUser) {
 			dispatch(

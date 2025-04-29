@@ -58,12 +58,11 @@ const EnergyCapsule = ({ count = 5 }) => {
 
 		const capsuleGeom = new THREE.ExtrudeGeometry(shape, extrudeSettings)
 
-		const material = new THREE.MeshStandardMaterial({
-			color: 0xffe27c,
-			transparent: true,
-			opacity: 0.8,
-			emissive: 0xffe27c,
-			emissiveIntensity: 0.2,
+		const material = new THREE.MeshLambertMaterial({
+			color: 0xffdb1c,
+
+			emissive: 0xffdb1c,
+			emissiveIntensity: 1.5,
 		})
 
 		const radius = 6

@@ -7,7 +7,7 @@ import {
 
 const BackButton = ({
 	onReset,
-	setBrainBtnClick,
+	setBreathBtnClick,
 	setFaceBtnClick,
 	setBodyBtnClick,
 }) => {
@@ -45,7 +45,7 @@ const BackButton = ({
 				dispatch(setIsBackBtnVisible(false))
 				dispatch(setIsControlsBtnVisible(true))
 				onReset()
-				setBrainBtnClick(false)
+				setBreathBtnClick(false)
 				setFaceBtnClick(false)
 				setBodyBtnClick(false)
 			})

@@ -21,7 +21,7 @@ const Sex = () => {
 
 	const auth = getAuth()
 
-	const { sex: savedSex, loading } = useSelector(state => state.userData)
+	const { sex: savedSex } = useSelector(state => state.userData)
 
 	const currentUser = auth.currentUser
 

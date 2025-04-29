@@ -10,10 +10,12 @@ import resetCamera from '../../utils/resetCamera'
 import BackButton from '../BackButton/BackButton'
 
 import { useDispatch, useSelector } from 'react-redux'
+import { UserAuth } from '../../context/AuthContext.jsx'
 import {
 	setIsBackBtnVisible,
 	setIsControlsBlocked,
 } from '../../store/controls.slice.js'
+import { loadUserDataFromFirestore } from '../../store/user-data.slice.js'
 import EnergyCapsule from '../EnergyCapsule/EnergyCapsule.jsx'
 import EnergySegment from '../EnergySegment/EnergySegment.jsx'
 import FloorRing from '../FloorRing/FloorRing'
@@ -22,6 +24,7 @@ import SideMainButtons from '../SideMainButtons/SideMainButtons.jsx'
 const Avatar = () => {
 	const { scene, camera, gl } = useThree()
 	const controlsRef = useRef()
+	const humanRef = useRef()
 
 	const initialTarget = new THREE.Vector3(0, 10, 0)
 
@@ -40,6 +43,18 @@ const Avatar = () => {
 	const human = useLoader(OBJLoader, './models/Human.obj')
 
 	const { skinColor } = useSelector(state => state.userData)
+
+	console.log('CHECK SKIN COLOR,', skinColor)
+
+	const { user } = UserAuth()
+	const uid = user?.uid
+
+	useEffect(() => {
+		// Load user data when the component mounts and when the user ID changes
+		if (uid) {
+			dispatch(loadUserDataFromFirestore(uid))
+		}
+	}, [uid])
 
 	const cameraToBodyPart = (
 		targetPosition,
@@ -100,18 +115,6 @@ const Avatar = () => {
 		})
 
 	useEffect(() => {
-		const skinMaterial = new THREE.MeshStandardMaterial({
-			color: skinColor ? skinColor : 0xffcc99,
-			// transparent: true,
-			// opacity: 0.5,
-		})
-
-		human.traverse(child => {
-			if (child.isMesh) {
-				child.material = skinMaterial
-			}
-		})
-
 		human.position.set(0, 1, 0)
 		scene.add(human)
 
@@ -119,6 +122,22 @@ const Avatar = () => {
 			scene.remove(human)
 		}
 	}, [])
+
+	useEffect(() => {
+		const skinMaterial = new THREE.MeshStandardMaterial({
+			color: skinColor ? skinColor : 0xffcc99,
+			// transparent: true,
+			// opacity: 0.5,
+		})
+
+		if (humanRef.current) {
+			humanRef.current.traverse(child => {
+				if (child.isMesh) {
+					child.material = skinMaterial
+				}
+			})
+		}
+	}, [skinColor])
 
 	return (
 		<>

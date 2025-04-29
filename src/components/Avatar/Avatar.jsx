@@ -44,6 +44,8 @@ const Avatar = () => {
 
 	const { skinColor } = useSelector(state => state.userData)
 
+	const defaultSkinColor = '#F5C6A5'
+
 	const { user } = UserAuth()
 	const uid = user?.uid
 
@@ -113,20 +115,18 @@ const Avatar = () => {
 		})
 
 	useEffect(() => {
+		human.traverse(child => {
+			if (child.isMesh) {
+				child.material.color.set(skinColor ? skinColor : defaultSkinColor)
+			}
+		})
+
 		human.position.set(0, 1, 0)
 		scene.add(human)
 
 		return () => {
 			scene.remove(human)
 		}
-	}, [])
-
-	useEffect(() => {
-		human.traverse(child => {
-			if (child.isMesh) {
-				child.material.color.set(skinColor)
-			}
-		})
 	}, [skinColor])
 
 	return (

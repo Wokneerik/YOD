@@ -18,7 +18,7 @@ import {
 import './styles.css'
 
 const SkinColor = () => {
-	const [selectedSkinColor, setSelectedSkinColor] = useState('#f5c6a5')
+	const [selectedSkinColor, setSelectedSkinColor] = useState('#F5C6A5')
 
 	const navigate = useNavigate()
 
@@ -27,11 +27,11 @@ const SkinColor = () => {
 	const dispatch = useDispatch()
 
 	const skinColors = [
-		'#f5c6a5',
-		'#e0ac69',
-		'#c68642',
-		'#b47c4d',
-		'#a47148',
+		'#F4D4BB',
+		'#F5C6A5',
+		'#D19554',
+		'#AE703A',
+		'#845225',
 		'#2F1E11',
 	]
 

@@ -2,6 +2,8 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
+
+import PersonalCard from '../PersonalCard/PersonalCard'
 import './style.css'
 
 const Account = () => {
@@ -121,6 +123,12 @@ const Account = () => {
 					>
 						Log Out
 					</div>
+				</>
+			)}
+
+			{openAccPage && (
+				<>
+					<PersonalCard isVisible={openAccPage} />
 				</>
 			)}
 

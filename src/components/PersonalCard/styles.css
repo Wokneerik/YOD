@@ -1,0 +1,60 @@
+.personal-card {
+	position: absolute;
+	border-radius: 25px;
+	top: 120px;
+	left: 20px;
+	right: 20px;
+	background-color: #f6f7f9;
+	z-index: 999999;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	opacity: 0;
+	transform: scale(0.8);
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.personal-card.show {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.personal-card-title {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	text-align: center;
+	width: 100%;
+	color: #777;
+}
+
+.personal-data-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%; /* Make each row take the full width */
+	padding: 10px 0;
+	border-bottom: 1px solid #e0e0e0; /* Add a separator between items */
+}
+
+.personal-data-item:last-child {
+	border-bottom: none; /* Remove the border from the last item */
+}
+
+.data-label {
+	font-weight: bold;
+	color: #333;
+}
+
+.data-value {
+	display: flex;
+	align-items: center;
+	color: #555;
+}
+
+.personal-card__icon {
+	margin-left: 10px; /* Space between the value and the icon */
+	color: #007bff; /* Example icon color */
+}

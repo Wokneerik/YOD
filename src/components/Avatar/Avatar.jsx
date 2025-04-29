@@ -42,10 +42,6 @@ const Avatar = () => {
 
 	const human = useLoader(OBJLoader, './models/Human.obj')
 
-	const { skinColor } = useSelector(state => state.userData)
-
-	const defaultSkinColor = '#F5C6A5'
-
 	const { user } = UserAuth()
 	const uid = user?.uid
 
@@ -55,6 +51,10 @@ const Avatar = () => {
 			dispatch(loadUserDataFromFirestore(uid))
 		}
 	}, [uid])
+
+	const { skinColor } = useSelector(state => state.userData)
+
+	const defaultSkinColor = '#F5C6A5'
 
 	const cameraToBodyPart = (
 		targetPosition,
@@ -118,7 +118,7 @@ const Avatar = () => {
 		human.traverse(child => {
 			if (child.isMesh) {
 				child.material = new THREE.MeshStandardMaterial({
-					color: skinColor,
+					color: skinColor ? skinColor : defaultSkinColor,
 					roughness: 0.9, // More skin-like roughness
 					metalness: 0.1, // Very slight sheen
 					envMapIntensity: 0.4,

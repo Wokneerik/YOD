@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 
 import PersonalCard from '../PersonalCard/PersonalCard'
-import './style.css'
+import './styles.css'
 
 const Account = () => {
 	const [openAccPage, setOpenAccPage] = useState(false)
@@ -61,8 +61,6 @@ const Account = () => {
 
 	const handleButtonClick = () => {
 		setOpenAccPage(prev => !prev)
-		if (user && !openAccPage) {
-		}
 	}
 
 	const handleSignOut = async () => {
@@ -85,7 +83,12 @@ const Account = () => {
 					openAccPage ? 'showing-close' : 'showing-user'
 				}`}
 				onClick={handleButtonClick}
-				style={{ zIndex: openAccPage ? 999999 : 9997 }}
+				style={{
+					zIndex: openAccPage ? 999999 : 9997,
+					backgroundImage: openAccPage
+						? ''
+						: `url(${user?.photoURL || '/img/buttons/user.png'})`,
+				}}
 			></div>
 
 			{user && (
@@ -123,12 +126,12 @@ const Account = () => {
 					>
 						Log Out
 					</div>
-				</>
-			)}
 
-			{openAccPage && (
-				<>
-					<PersonalCard isVisible={openAccPage} />
+					{openAccPage && (
+						<>
+							<PersonalCard isVisible={openAccPage} />
+						</>
+					)}
 				</>
 			)}
 

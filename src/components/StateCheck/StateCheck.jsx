@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
 import { svgSmilesStatus } from '../../../constants'
@@ -31,8 +31,9 @@ const StateCheck = () => {
 	const [openStateScreen, setOpenStateScreen] = useState(false)
 	const sliderRef = useRef(null)
 	const smileyRef = useRef(null)
+	const timeoutRef = useRef(null)
 	const containerRef = useRef(null)
-	const [timeoutId, setTimeoutId] = useState(null)
+
 	const [isSliderTouched, setIsSliderTouched] = useState(false)
 
 	const [isShutterPressed, setIsShutterPressed] = useState(false)
@@ -69,57 +70,57 @@ const StateCheck = () => {
 		))
 	}
 
-	const handleSliderInput = event => {
-		const value = parseInt(event.target.value)
-		dispatch(setStateCheck(value))
+	const handleSliderInput = useCallback(
+		event => {
+			const value = parseInt(event.target.value)
+			dispatch(setStateCheck(value))
 
-		if (timeoutId) {
-			clearTimeout(timeoutId)
-		}
+			if (timeoutRef.current) clearTimeout(timeoutRef.current)
 
-		const newTimeoutId = setTimeout(() => {
-			dispatch(setSliderVisible(false))
-			dispatch(setShowHealthConditionButton(true))
-		}, 1200)
-		setTimeoutId(newTimeoutId)
+			timeoutRef.current = setTimeout(() => {
+				dispatch(setSliderVisible(false))
+				dispatch(setShowHealthConditionButton(true))
+			}, 1200)
 
-		if (smileyRef.current) {
-			const smileyPath = smileyRef.current.querySelector('path')
-			if (smileyPath) {
-				let d, stroke
+			if (smileyRef.current) {
+				const smileyPath = smileyRef.current.querySelector('path')
+				if (smileyPath) {
+					let d, stroke
 
-				if (value < 50) {
-					const t = value / 50
-					const controlPointY = -2 + t * 2
-					d = `M8 15c2 ${controlPointY} 6 ${controlPointY} 8 0`
-					stroke = `rgb(${255}, ${255 * t}, 0)`
-				} else {
-					const t = (value - 50) / 50
-					const controlPointY = 0 + t * 2
-					d = `M8 15c2 ${controlPointY} 6 ${controlPointY} 8 0`
-					stroke = `rgb(${255 - t * 255}, ${255 - t * 85}, 0)`
+					if (value < 50) {
+						const t = value / 50
+						const controlPointY = -2 + t * 2
+						d = `M8 15c2 ${controlPointY} 6 ${controlPointY} 8 0`
+						stroke = `rgb(${255}, ${255 * t}, 0)`
+					} else {
+						const t = (value - 50) / 50
+						const controlPointY = 0 + t * 2
+						d = `M8 15c2 ${controlPointY} 6 ${controlPointY} 8 0`
+						stroke = `rgb(${255 - t * 255}, ${255 - t * 85}, 0)`
+					}
+
+					smileyPath.setAttribute('d', d)
+					smileyPath.setAttribute('stroke', stroke)
+
+					if (sliderRef.current) {
+						sliderRef.current.style.background = `linear-gradient(to right, ${stroke} ${value}%, white ${value}%)`
+					}
 				}
 
-				smileyPath.setAttribute('d', d)
-				smileyPath.setAttribute('stroke', stroke)
+				const maxHeight = -25
+				const progress = value / 100
+				const t = progress
+				const y = maxHeight * (1 - Math.pow(1 - t, 3))
 
-				if (sliderRef.current) {
-					sliderRef.current.style.background = `linear-gradient(to right, ${stroke} ${value}%, white ${value}%)`
-				}
+				const containerWidth = containerRef.current?.offsetWidth ?? 0
+				const pixelOffset = (containerWidth - 18) * (value / 100)
+
+				smileyRef.current.style.visibility = 'visible'
+				smileyRef.current.style.transform = `translate(${pixelOffset}px, ${y}px)`
 			}
-
-			const maxHeight = -25
-			const progress = value / 100
-			const t = progress
-			const y = maxHeight * (1 - Math.pow(1 - t, 3))
-
-			const containerWidth = containerRef.current?.offsetWidth ?? 0
-			const pixelOffset = (containerWidth - 18) * (value / 100)
-
-			smileyRef.current.style.visibility = 'visible'
-			smileyRef.current.style.transform = `translate(${pixelOffset}px, ${y}px)`
-		}
-	}
+		},
+		[dispatch]
+	)
 
 	const handleTouchStart = () => {
 		setIsSliderTouched(true)

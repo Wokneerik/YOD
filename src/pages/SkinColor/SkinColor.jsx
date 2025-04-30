@@ -151,7 +151,29 @@ const SkinColor = () => {
 
 const SceneContent = ({ skinColor }) => {
 	const maleModel = useLoader(OBJLoader, './models/Male.obj')
+	const femaleModel = useLoader(OBJLoader, './models/Female.obj')
+	const activeModelRef = useRef(null)
 	const groupRef = useRef()
+
+	const { sex } = useSelector(state => state.userData)
+
+	useEffect(() => {
+		if (groupRef.current) {
+			while (groupRef.current.children.length > 0) {
+				groupRef.current.remove(groupRef.current.children[0])
+			}
+
+			const modelToUse =
+				sex === 'female' ? femaleModel.clone() : maleModel.clone()
+
+			if (sex === 'female') {
+				modelToUse.scale.set(11.3, 11.3, 11.3)
+			}
+
+			groupRef.current.add(modelToUse)
+			activeModelRef.current = modelToUse
+		}
+	}, [sex])
 
 	useFrame(() => {
 		if (groupRef.current) {
@@ -177,9 +199,7 @@ const SceneContent = ({ skinColor }) => {
 
 	return (
 		<>
-			<group ref={groupRef} position={[0, 0, 0]} rotation={[0, 0, 0]}>
-				<primitive object={maleModel.clone()} />
-			</group>
+			<group ref={groupRef} position={[0, 0, 0]} rotation={[0, 0, 0]}></group>
 		</>
 	)
 }

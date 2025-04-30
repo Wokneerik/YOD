@@ -150,7 +150,7 @@ const SkinColor = () => {
 }
 
 const SceneContent = ({ skinColor }) => {
-	const humanObj = useLoader(OBJLoader, '/models/Human.obj')
+	const maleModel = useLoader(OBJLoader, './models/Male.obj')
 	const groupRef = useRef()
 
 	useFrame(() => {
@@ -178,7 +178,7 @@ const SceneContent = ({ skinColor }) => {
 	return (
 		<>
 			<group ref={groupRef} position={[0, 0, 0]} rotation={[0, 0, 0]}>
-				<primitive object={humanObj.clone()} />
+				<primitive object={maleModel.clone()} />
 			</group>
 		</>
 	)

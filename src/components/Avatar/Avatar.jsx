@@ -40,19 +40,27 @@ const Avatar = () => {
 
 	const [bodyBtnClick, setBodyBtnClick] = useState(false)
 
-	const human = useLoader(OBJLoader, './models/Human.obj')
+	const maleModel = useLoader(OBJLoader, './models/Male.obj')
+	const femaleModel = useLoader(OBJLoader, './models/Female.obj')
+
+	const activeModelRef = useRef(null)
 
 	const { user } = UserAuth()
 	const uid = user?.uid
 
+	const [isAuthenticated, setIsAuthenticated] = useState(!!uid)
+
 	useEffect(() => {
-		// Load user data when the component mounts and when the user ID changes
+		setIsAuthenticated(!!uid)
 		if (uid) {
 			dispatch(loadUserDataFromFirestore(uid))
 		}
 	}, [uid])
 
-	const { skinColor } = useSelector(state => state.userData)
+	const userData = useSelector(state => state.userData)
+
+	const sex = isAuthenticated ? userData.sex : 'male' //
+	const skinColor = isAuthenticated ? userData.skinColor : null
 
 	const defaultSkinColor = '#F5C6A5'
 
@@ -115,7 +123,15 @@ const Avatar = () => {
 		})
 
 	useEffect(() => {
-		human.traverse(child => {
+		if (activeModelRef.current) {
+			scene.remove(activeModelRef.current)
+			activeModelRef.current = null
+		}
+
+		const modelToUse =
+			sex === 'female' ? femaleModel.clone() : maleModel.clone()
+
+		modelToUse.traverse(child => {
 			if (child.isMesh) {
 				child.material = new THREE.MeshStandardMaterial({
 					color: skinColor ? skinColor : defaultSkinColor,
@@ -126,13 +142,21 @@ const Avatar = () => {
 			}
 		})
 
-		human.position.set(0, 1, 0)
-		scene.add(human)
+		modelToUse.position.set(0, 1, 0)
+
+		if (sex === 'female') {
+			modelToUse.scale.set(11.3, 11.3, 11.3)
+		}
+
+		scene.add(modelToUse)
+		activeModelRef.current = modelToUse
 
 		return () => {
-			scene.remove(human)
+			if (activeModelRef.current) {
+				scene.remove(activeModelRef.current)
+			}
 		}
-	}, [skinColor])
+	}, [sex, skinColor, isAuthenticated])
 
 	return (
 		<>

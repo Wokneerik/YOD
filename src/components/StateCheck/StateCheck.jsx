@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
 import { svgSmilesStatus } from '../../../constants'
 import {
@@ -11,11 +11,22 @@ import './style.css'
 
 const StateCheck = () => {
 	const dispatch = useDispatch()
-	const { stateCheck, sliderVisible, showHealthConditionButton } = useSelector(
-		state => state.stateCheck
+	const {
+		stateCheck,
+		sliderVisible,
+		showHealthConditionButton,
+		isControlsBtnVisible,
+	} = useSelector(
+		state => ({
+			stateCheck: state.stateCheck.stateCheck,
+			sliderVisible: state.stateCheck.sliderVisible,
+			showHealthConditionButton: state.stateCheck.showHealthConditionButton,
+			isControlsBtnVisible: state.controls.isControlsBtnVisible,
+		}),
+		shallowEqual
 	)
 
-	const { isControlsBtnVisible } = useSelector(state => state.controls)
+	console.log('CHECK RERENDERS IN STATE CHECK ')
 
 	const [openStateScreen, setOpenStateScreen] = useState(false)
 	const sliderRef = useRef(null)

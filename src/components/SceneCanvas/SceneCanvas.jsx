@@ -1,4 +1,4 @@
-import { Preload } from '@react-three/drei'
+import { Float, Preload } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import React, { Suspense } from 'react'
 import * as THREE from 'three'
@@ -72,13 +72,6 @@ const SceneCanvas = () => {
 					castShadow
 				/>
 
-				{/* <directionalLight
-					color={0xffffff}
-					intensity={0.2}
-					position={[5, -7, 10]}
-					castShadow
-				/> */}
-
 				<directionalLight
 					position={[3, 3, -5]}
 					intensity={1.3}
@@ -94,8 +87,15 @@ const SceneCanvas = () => {
 					groundColor={0x080820}
 					intensity={0.6}
 				/>
-
-				<Avatar />
+				<Float
+					position={[1, 1.1, -0.5]}
+					rotation={[Math.PI / 3.5, 0, 0]}
+					rotationIntensity={4}
+					floatIntensity={6}
+					speed={1.5}
+				>
+					<Avatar />
+				</Float>
 			</Canvas>
 		</div>
 	)

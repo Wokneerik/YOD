@@ -60,7 +60,7 @@ const Sex = () => {
 				<div>
 					<BackButton />
 				</div>
-				<ProgressBar progress={25} />
+				<ProgressBar progress={40} />
 			</div>
 
 			{/* Main Content */}

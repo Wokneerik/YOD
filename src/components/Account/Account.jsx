@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 
+import { useSelector } from 'react-redux'
 import PersonalCard from '../PersonalCard/PersonalCard'
 import './styles.css'
 
@@ -15,6 +16,8 @@ const Account = () => {
 	const navigate = useNavigate()
 
 	const { googleSignIn } = UserAuth()
+
+	const { name } = useSelector(state => state.userData)
 
 	const handleGoogleSignIn = async () => {
 		try {
@@ -108,7 +111,7 @@ const Account = () => {
 							zIndex: openAccPage ? 999999 : 9989,
 						}}
 					>
-						{user.displayName?.split(' ')[0] || 'User'}
+						{name || 'User'}
 					</div>
 
 					<div

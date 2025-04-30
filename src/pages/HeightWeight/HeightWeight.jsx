@@ -94,7 +94,7 @@ const HeightWeight = () => {
 						<div>
 							<BackButton />
 						</div>
-						<ProgressBar progress={50} />
+						<ProgressBar progress={60} />
 					</div>
 
 					{/* Main Content */}

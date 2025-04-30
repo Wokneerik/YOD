@@ -34,6 +34,7 @@ export const loadUserDataFromFirestore = createAsyncThunk(
 )
 
 const initialState = {
+	name: '',
 	sex: '',
 	height: '',
 	weight: '',
@@ -48,6 +49,9 @@ const userDataSlice = createSlice({
 	name: 'userData',
 	initialState,
 	reducers: {
+		setName: (state, action) => {
+			state.name = action.payload
+		},
 		setSex: (state, action) => {
 			state.sex = action.payload
 		},
@@ -87,6 +91,7 @@ const userDataSlice = createSlice({
 			})
 			.addCase(loadUserDataFromFirestore.fulfilled, (state, action) => {
 				state.loading = false
+				state.name = action.payload.name || ''
 				state.sex = action.payload.sex || ''
 				state.height = action.payload.height || ''
 				state.weight = action.payload.weight || ''
@@ -101,6 +106,7 @@ const userDataSlice = createSlice({
 })
 
 export const {
+	setName,
 	setSex,
 	setHeight,
 	setWeight,

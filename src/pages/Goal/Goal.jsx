@@ -60,7 +60,7 @@ const Goal = () => {
 				<div>
 					<BackButton />
 				</div>
-				<ProgressBar progress={75} />
+				<ProgressBar progress={80} />
 			</div>
 
 			{/* Main Content */}

@@ -5,6 +5,7 @@ import Loader from './components/Loader/index.jsx'
 import { AuthContextProvider } from './context/AuthContext.jsx'
 import Goal from './pages/Goal/Goal.jsx'
 import HeightWeight from './pages/HeightWeight/HeightWeight.jsx'
+import Name from './pages/Name/Name.jsx'
 import Sex from './pages/Sex/Sex.jsx'
 import SkinColor from './pages/SkinColor/SkinColor.jsx'
 import Welcome from './pages/Welcome/Welcome.jsx'
@@ -28,10 +29,11 @@ function App() {
 				<Routes>
 					<Route path='/' element={<HomePage />} />
 					<Route path='/welcome' element={<Welcome />} />
+
+					<Route path='/name' element={<Name />} />
 					<Route path='/sex' element={<Sex />} />
 					<Route path='/height-weight' element={<HeightWeight />} />
 					<Route path='/goal' element={<Goal />} />
-
 					<Route path='/skin-color' element={<SkinColor />} />
 				</Routes>
 			</BrowserRouter>

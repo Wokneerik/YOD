@@ -26,8 +26,6 @@ const StateCheck = () => {
 		shallowEqual
 	)
 
-	console.log('CHECK RERENDERS IN STATE CHECK ')
-
 	const [openStateScreen, setOpenStateScreen] = useState(false)
 	const sliderRef = useRef(null)
 	const smileyRef = useRef(null)

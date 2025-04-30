@@ -20,7 +20,7 @@ const PersonalCard = ({ isVisible }) => {
 		}
 	}, [uid])
 
-	const { height, weight, goal } = useSelector(state => state.userData)
+	const { name, height, weight, goal } = useSelector(state => state.userData)
 
 	useEffect(() => {
 		if (isVisible) {
@@ -40,7 +40,7 @@ const PersonalCard = ({ isVisible }) => {
 			<div className='personal-data-item'>
 				<span className='data-label'>Name</span>
 				<div className='data-value'>
-					<span>Max</span>
+					<span>{name || '-'}</span>
 					<ChevronRight
 						className='personal-card__icon'
 						color='#454545'

@@ -75,7 +75,7 @@ const Welcome = () => {
 				tailoring your experience and is integral to our services. You can
 				manage your preferences in your profile.
 			</p>
-			<Link to='/sex' className='start-button'>
+			<Link to='/name' className='start-button'>
 				Get started
 			</Link>
 		</div>

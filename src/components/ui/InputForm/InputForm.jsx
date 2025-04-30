@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './styles.css'
 
-const InputForm = ({ title, measuredAs, icon: Icon, onChange, error }) => {
+const InputForm = ({ title, icon: Icon, onChange, error }) => {
 	const [value, setValue] = useState('')
 
 	const handleChange = event => {
@@ -23,7 +23,6 @@ const InputForm = ({ title, measuredAs, icon: Icon, onChange, error }) => {
 				value={value}
 				onChange={handleChange}
 			/>
-			{measuredAs && <span className='measured-as'>{measuredAs}</span>}
 			{error && <div className='error-message-input'>{error}</div>}{' '}
 		</div>
 	)

@@ -112,8 +112,6 @@ const HeightWeight = () => {
 								formik={formik}
 								onChange={e => {
 									formik.handleChange(e)
-
-									dispatch(setHeight(e.target.value))
 								}}
 							/>
 							<NumericInputForm
@@ -125,8 +123,6 @@ const HeightWeight = () => {
 								formik={formik}
 								onChange={e => {
 									formik.handleChange(e)
-
-									dispatch(setWeight(e.target.value))
 								}}
 							/>
 						</div>

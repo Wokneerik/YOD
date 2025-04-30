@@ -26,13 +26,6 @@ const Name = () => {
 	const currentUser = auth.currentUser
 
 	useEffect(() => {
-		// If no user is logged in, redirect to sign in
-
-		// if (!currentUser) {
-		//   navigate('/');
-		// }
-
-		// If there's saved sex in Redux, use it
 		if (savedName) {
 			setSelectedName(savedName)
 		}
@@ -72,6 +65,7 @@ const Name = () => {
 					<InputForm
 						title={'Name'}
 						icon={UserRoundPen}
+						value={selectedName}
 						onChange={handleNameChange}
 					/>
 				</div>

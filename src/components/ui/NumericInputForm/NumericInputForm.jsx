@@ -24,7 +24,7 @@ const NumericInputForm = ({
 	}
 
 	return (
-		<div className='input-wrapper'>
+		<div className='numeric-input-wrapper'>
 			<div className='input-field-container'>
 				{Icon && (
 					<Icon className='input-icon' color='#454545' strokeWidth={1.75} />

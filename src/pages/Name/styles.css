@@ -41,20 +41,6 @@
 	text-align: center;
 }
 
-.name-button-container {
-	width: 100%;
-	max-width: 28rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 2rem;
-}
-
-.name-button-container > * {
-	margin-bottom: 1rem;
-	width: 100%;
-}
-
 .name-input-container {
 	width: 100%;
 	max-width: 28rem;

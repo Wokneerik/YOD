@@ -1,13 +1,13 @@
-.input-wrapper {
+.numeric-input-wrapper {
 	position: relative;
 	width: 100%;
-	margin-bottom: 1rem; /* Add some space below each input wrapper */
+	margin-bottom: 1rem;
 }
 
 .input-field-container {
 	display: flex;
 	align-items: center;
-	position: relative; /* Needed for absolute positioning of icon and measured-as */
+	position: relative;
 }
 
 .input-icon {

@@ -1,8 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './styles.css'
 
-const InputForm = ({ title, icon: Icon, onChange, error }) => {
-	const [value, setValue] = useState('')
+const InputForm = ({
+	title,
+	icon: Icon,
+	onChange,
+	error,
+	value: initialValue = '',
+}) => {
+	const [value, setValue] = useState(initialValue)
+
+	useEffect(() => {
+		setValue(initialValue)
+	}, [initialValue])
 
 	const handleChange = event => {
 		setValue(event.target.value)

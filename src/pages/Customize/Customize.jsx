@@ -42,13 +42,6 @@ const Customize = () => {
 	const currentUser = auth.currentUser
 
 	useEffect(() => {
-		// If no user is logged in, redirect to sign in
-
-		// if (!currentUser) {
-		//   navigate('/');
-		// }
-
-		// If there's saved sex in Redux, use it
 		if (savedSkinColor) {
 			setSelectedSkinColor(savedSkinColor)
 		}

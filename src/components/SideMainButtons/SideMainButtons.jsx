@@ -3,12 +3,7 @@ import { useDispatch } from 'react-redux'
 import { sideMainButtonConfig } from '../../../constants'
 import { setIsControlsBtnVisible } from '../../store/controls.slice'
 
-const SideMainButtons = ({
-	onButtonClick,
-	setBreathBtnClick,
-	setFaceBtnClick,
-	setBodyBtnClick,
-}) => {
+const SideMainButtons = ({ onButtonClick }) => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -83,18 +78,6 @@ const SideMainButtons = ({
 				container.addEventListener('click', () => {
 					onButtonClick(position, lookAt, zoom, targetFov)
 					dispatch(setIsControlsBtnVisible(false))
-
-					if (index === 0) {
-						setFaceBtnClick(true)
-					}
-
-					if (index === 1) {
-						setBreathBtnClick(true)
-					}
-
-					if (index === 2) {
-						setBodyBtnClick(true)
-					}
 				})
 
 				document.body.appendChild(container)

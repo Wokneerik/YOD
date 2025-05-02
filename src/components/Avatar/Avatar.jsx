@@ -1,11 +1,8 @@
-import { OrbitControls } from '@react-three/drei'
-import { useLoader, useThree } from '@react-three/fiber'
+import { OrbitControls, useGLTF } from '@react-three/drei'
+import { useThree } from '@react-three/fiber'
 import React, { useEffect, useRef, useState } from 'react'
-import * as THREE from 'three'
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
 
 import gsap from 'gsap'
-import { cameraFov, cameraPosition } from '../../../constants.js'
 import resetCamera from '../../utils/resetCamera'
 import BackButton from '../BackButton/BackButton'
 
@@ -17,33 +14,17 @@ import {
 } from '../../store/controls.slice.js'
 import { loadUserDataFromFirestore } from '../../store/user-data.slice.js'
 
-import EnergyCapsule from '../EnergyCapsule/EnergyCapsule.jsx'
-import EnergySegment from '../EnergySegment/EnergySegment.jsx'
-import FloorRing from '../FloorRing/FloorRing'
+import { defaultSkinColor } from '../../../constants.js'
 import SideMainButtons from '../SideMainButtons/SideMainButtons.jsx'
 
-const Avatar = () => {
-	const { scene, camera } = useThree()
+const Avatar = ({ ...props }) => {
+	const { camera } = useThree()
 	const controlsRef = useRef()
-
-	const initialTarget = new THREE.Vector3(0, 10, 0)
-
-	const initialFov = cameraFov
 
 	const dispatch = useDispatch()
 
 	const { isControlsBlocked, isBackBtnVisible, isControlsBtnVisible } =
 		useSelector(state => state.controls)
-
-	const [breathBtnClick, setBreathBtnClick] = useState(false)
-	const [faceBtnClick, setFaceBtnClick] = useState(false)
-
-	const [bodyBtnClick, setBodyBtnClick] = useState(false)
-
-	const maleModel = useLoader(OBJLoader, './models/Male.obj')
-	const femaleModel = useLoader(OBJLoader, './models/Female.obj')
-
-	const activeModelRef = useRef(null)
 
 	const { user } = UserAuth()
 	const uid = user?.uid
@@ -59,10 +40,12 @@ const Avatar = () => {
 
 	const userData = useSelector(state => state.userData)
 
-	const sex = isAuthenticated ? userData.sex : 'male' //
+	const sex = isAuthenticated ? userData.sex : 'male'
 	const skinColor = isAuthenticated ? userData.skinColor : null
 
-	const defaultSkinColor = '#F5C6A5'
+	const { nodes } = useGLTF(
+		sex === 'male' ? './models/Male.glb' : './models/Female.glb'
+	)
 
 	const cameraToBodyPart = (
 		targetPosition,
@@ -115,48 +98,9 @@ const Avatar = () => {
 	const resetCameraFunc = () =>
 		resetCamera({
 			camera,
-			cameraPosition,
-			initialTarget,
-			initialFov,
 			controlsRef,
 			dispatch,
 		})
-
-	useEffect(() => {
-		if (activeModelRef.current) {
-			scene.remove(activeModelRef.current)
-			activeModelRef.current = null
-		}
-
-		const modelToUse =
-			sex === 'female' ? femaleModel.clone() : maleModel.clone()
-
-		modelToUse.traverse(child => {
-			if (child.isMesh) {
-				child.material = new THREE.MeshStandardMaterial({
-					color: skinColor ? skinColor : defaultSkinColor,
-					roughness: 0.9, // More skin-like roughness
-					metalness: 0.1, // Very slight sheen
-					envMapIntensity: 0.4,
-				})
-			}
-		})
-
-		modelToUse.position.set(0, 1, 0)
-
-		if (sex === 'female') {
-			modelToUse.scale.set(11.3, 11.3, 11.3)
-		}
-
-		scene.add(modelToUse)
-		activeModelRef.current = modelToUse
-
-		return () => {
-			if (activeModelRef.current) {
-				scene.remove(activeModelRef.current)
-			}
-		}
-	}, [sex, skinColor, isAuthenticated])
 
 	return (
 		<>
@@ -172,26 +116,29 @@ const Avatar = () => {
 				minPolarAngle={Math.PI / 4.5}
 			/>
 
-			{isBackBtnVisible && (
-				<BackButton
-					onReset={resetCameraFunc}
-					setBreathBtnClick={setBreathBtnClick}
-					setFaceBtnClick={setFaceBtnClick}
-					setBodyBtnClick={setBodyBtnClick}
-				/>
-			)}
+			{isBackBtnVisible && <BackButton onReset={resetCameraFunc} />}
 
 			{isControlsBtnVisible && (
-				<SideMainButtons
-					onButtonClick={cameraToBodyPart}
-					setBreathBtnClick={setBreathBtnClick}
-					setFaceBtnClick={setFaceBtnClick}
-					setBodyBtnClick={setBodyBtnClick}
-				/>
+				<SideMainButtons onButtonClick={cameraToBodyPart} />
 			)}
-			<FloorRing />
-			<EnergySegment />
-			<EnergyCapsule />
+			{sex && (
+				<group {...props} dispose={null}>
+					<mesh
+						castShadow
+						receiveShadow
+						geometry={nodes.Node1.geometry}
+						scale={sex === 'male' ? 1 : 11}
+						position={[0, 1, 0]}
+					>
+						<meshStandardMaterial
+							color={skinColor ? skinColor : defaultSkinColor}
+							roughness={0.9}
+							metalness={0.1}
+							envMapIntensity={0.4}
+						/>
+					</mesh>
+				</group>
+			)}
 		</>
 	)
 }

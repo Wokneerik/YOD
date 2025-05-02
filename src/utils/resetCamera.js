@@ -1,13 +1,7 @@
 import { gsap } from 'gsap'
+import { cameraFov, cameraPosition, initialTarget } from '../../constants'
 
-const resetCamera = ({
-	camera,
-	cameraPosition,
-	initialTarget,
-	initialFov,
-	controlsRef,
-	dispatch,
-}) => {
+const resetCamera = ({ camera, controlsRef, dispatch }) => {
 	const currentTarget = controlsRef.current.target.clone()
 
 	gsap.to(currentTarget, {
@@ -42,7 +36,7 @@ const resetCamera = ({
 
 	if (camera.isPerspectiveCamera) {
 		gsap.to(camera, {
-			fov: initialFov,
+			fov: cameraFov,
 			duration: 1,
 			ease: 'power1.out',
 			onUpdate: () => camera.updateProjectionMatrix(),

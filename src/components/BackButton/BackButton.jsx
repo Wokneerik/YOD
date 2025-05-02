@@ -5,12 +5,7 @@ import {
 	setIsControlsBtnVisible,
 } from '../../store/controls.slice'
 
-const BackButton = ({
-	onReset,
-	setBreathBtnClick,
-	setFaceBtnClick,
-	setBodyBtnClick,
-}) => {
+const BackButton = ({ onReset }) => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -45,9 +40,6 @@ const BackButton = ({
 				dispatch(setIsBackBtnVisible(false))
 				dispatch(setIsControlsBtnVisible(true))
 				onReset()
-				setBreathBtnClick(false)
-				setFaceBtnClick(false)
-				setBodyBtnClick(false)
 			})
 
 			return button

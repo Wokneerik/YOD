@@ -1,9 +1,12 @@
-import { Float, Preload } from '@react-three/drei'
+import { Preload } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import React, { Suspense } from 'react'
 import * as THREE from 'three'
 import { cameraFov, cameraPosition } from '../../../constants.js'
 import Avatar from '../Avatar/Avatar.jsx'
+import EnergyCapsule from '../EnergyCapsule/EnergyCapsule.jsx'
+import EnergySegment from '../EnergySegment/EnergySegment.jsx'
+import FloorRing from '../FloorRing/FloorRing'
 
 // UI Lazy Loading
 const Account = React.lazy(() => import('../Account/Account.jsx'))
@@ -87,15 +90,11 @@ const SceneCanvas = () => {
 					groundColor={0x080820}
 					intensity={0.6}
 				/>
-				<Float
-					position={[1, 1.1, -0.5]}
-					rotation={[Math.PI / 3.5, 0, 0]}
-					rotationIntensity={4}
-					floatIntensity={6}
-					speed={1.5}
-				>
-					<Avatar />
-				</Float>
+
+				<Avatar />
+				<FloorRing />
+				<EnergySegment />
+				<EnergyCapsule />
 			</Canvas>
 		</div>
 	)

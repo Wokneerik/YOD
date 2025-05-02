@@ -13,6 +13,8 @@ const Account = () => {
 	const [loading, setLoading] = useState(false)
 
 	const [isNewUser, setIsNewUser] = useState(false)
+
+	const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false)
 	const navigate = useNavigate()
 
 	const { googleSignIn } = UserAuth()
@@ -79,6 +81,26 @@ const Account = () => {
 		}
 	}
 
+	const handleSignOutClick = () => {
+		setShowLogoutConfirmation(true)
+	}
+
+	const handleSignOutConfirm = async () => {
+		try {
+			setLoading(true)
+			const auth = getAuth()
+			await signOut(auth)
+			setShowLogoutConfirmation(false)
+		} catch (error) {
+			console.error('Error signing out:', error)
+			setLoading(false)
+		}
+	}
+
+	const handleCancelLogout = () => {
+		setShowLogoutConfirmation(false)
+	}
+
 	return (
 		<>
 			<div
@@ -119,7 +141,7 @@ const Account = () => {
 						style={{
 							zIndex: openAccPage ? 110 : 102,
 						}}
-						onClick={handleSignOut}
+						onClick={handleSignOutClick}
 					></div>
 					<div
 						className={`sign-out-label ${openAccPage ? 'active' : ''}`}
@@ -135,6 +157,26 @@ const Account = () => {
 							<PersonalCard isVisible={openAccPage} />
 						</>
 					)}
+					<div
+						className={`logout-container ${
+							showLogoutConfirmation ? 'active' : ''
+						}`}
+					>
+						<div className='logout-confirmation'>
+							<h2>Are you sure you want to log out?</h2>
+							<div className='logout-options'>
+								<button className='cancel-button' onClick={handleCancelLogout}>
+									Cancel
+								</button>
+								<button
+									className='logout-button'
+									onClick={handleSignOutConfirm}
+								>
+									Log Out
+								</button>
+							</div>
+						</div>
+					</div>
 				</>
 			)}
 

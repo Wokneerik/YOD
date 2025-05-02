@@ -39,6 +39,15 @@ const Avatar = ({ ...props }) => {
 		sex === 'male' ? './models/Male.glb' : './models/Female.glb'
 	)
 
+	const skinMaterial = (
+		<meshStandardMaterial
+			color={skinColor ? skinColor : defaultSkinColor}
+			roughness={0.9}
+			metalness={0.1}
+			envMapIntensity={0.4}
+		/>
+	)
+
 	return (
 		<>
 			<OrbitControls
@@ -56,22 +65,34 @@ const Avatar = ({ ...props }) => {
 			{isBackBtnVisible && <BackButton controlsRef={controlsRef} />}
 
 			{isControlsBtnVisible && <SideMainButtons controlsRef={controlsRef} />}
-			{sex && (
+
+			{sex && skinColor && (
 				<group {...props} dispose={null}>
-					<mesh
-						castShadow
-						receiveShadow
-						geometry={nodes.Node1.geometry}
-						scale={sex === 'male' ? 1 : 11}
-						position={[0, 1, 0]}
-					>
-						<meshStandardMaterial
-							color={skinColor ? skinColor : defaultSkinColor}
-							roughness={0.9}
-							metalness={0.1}
-							envMapIntensity={0.4}
-						/>
-					</mesh>
+					{sex === 'male' ? (
+						// Male model has only one node
+						<mesh
+							castShadow
+							receiveShadow
+							geometry={nodes.Node1.geometry}
+							scale={1}
+							position={[0, 1, 0]}
+						>
+							{skinMaterial}
+						</mesh>
+					) : (
+						Object.keys(nodes).map(nodeName => (
+							<mesh
+								key={nodeName}
+								castShadow
+								receiveShadow
+								geometry={nodes[nodeName].geometry}
+								scale={11}
+								position={[0, 1, 0]}
+							>
+								{skinMaterial}
+							</mesh>
+						))
+					)}
 				</group>
 			)}
 		</>

@@ -1,18 +1,22 @@
-import { useThree } from '@react-three/fiber'
 import gsap from 'gsap'
+import {
+	setIsBackBtnVisible,
+	setIsControlsBlocked,
+} from '../store/controls.slice'
 
 const cameraToBodyPart = (
+	camera,
+	controlsRef,
+	dispatch,
 	targetPosition,
 	targetLookAt,
 	zoomLevel,
 	targetFov
 ) => {
-	const { camera } = useThree()
-
 	if (controlsRef.current) {
 		controlsRef.current.enabled = false
 	}
-	setIsBackBtnVisible(true)
+	dispatch(setIsBackBtnVisible(true))
 
 	gsap.killTweensOf(camera.position)
 	gsap.killTweensOf(camera)
@@ -30,7 +34,7 @@ const cameraToBodyPart = (
 			}
 		},
 		onComplete: () => {
-			setControlsBlocked(true)
+			dispatch(setIsControlsBlocked(true))
 		},
 	})
 

@@ -1,10 +1,13 @@
+import { useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { sideMainButtonConfig } from '../../../constants'
 import { setIsControlsBtnVisible } from '../../store/controls.slice'
+import cameraToBodyPart from '../../utils/cameraToBodyPart'
 
-const SideMainButtons = ({ onButtonClick }) => {
+const SideMainButtons = ({ controlsRef }) => {
 	const dispatch = useDispatch()
+	const { camera } = useThree()
 
 	useEffect(() => {
 		const style = document.createElement('style')
@@ -76,7 +79,15 @@ const SideMainButtons = ({ onButtonClick }) => {
 				container.style.top = `${topOffset}px`
 
 				container.addEventListener('click', () => {
-					onButtonClick(position, lookAt, zoom, targetFov)
+					cameraToBodyPart(
+						camera,
+						controlsRef,
+						dispatch,
+						position,
+						lookAt,
+						zoom,
+						targetFov
+					)
 					dispatch(setIsControlsBtnVisible(false))
 				})
 

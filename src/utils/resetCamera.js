@@ -1,7 +1,8 @@
 import { gsap } from 'gsap'
 import { cameraFov, cameraPosition, initialTarget } from '../../constants'
+import { setIsControlsBlocked } from '../store/controls.slice'
 
-const resetCamera = ({ camera, controlsRef, dispatch }) => {
+const resetCamera = (camera, controlsRef, dispatch) => {
 	const currentTarget = controlsRef.current.target.clone()
 
 	gsap.to(currentTarget, {
@@ -30,7 +31,7 @@ const resetCamera = ({ camera, controlsRef, dispatch }) => {
 			}
 		},
 		onComplete: () => {
-			dispatch({ type: 'controls/setIsControlsBlocked', payload: false })
+			dispatch(setIsControlsBlocked(false))
 		},
 	})
 

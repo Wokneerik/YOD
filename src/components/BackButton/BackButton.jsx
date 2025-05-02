@@ -1,12 +1,15 @@
+import { useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {
 	setIsBackBtnVisible,
 	setIsControlsBtnVisible,
 } from '../../store/controls.slice'
+import resetCamera from '../../utils/resetCamera'
 
-const BackButton = ({ onReset }) => {
+const BackButton = ({ controlsRef }) => {
 	const dispatch = useDispatch()
+	const { camera } = useThree()
 
 	useEffect(() => {
 		const style = document.createElement('style')
@@ -39,7 +42,7 @@ const BackButton = ({ onReset }) => {
 			button.addEventListener('click', () => {
 				dispatch(setIsBackBtnVisible(false))
 				dispatch(setIsControlsBtnVisible(true))
-				onReset()
+				resetCamera(camera, controlsRef, dispatch)
 			})
 
 			return button

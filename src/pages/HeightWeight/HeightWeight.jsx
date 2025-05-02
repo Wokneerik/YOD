@@ -3,13 +3,12 @@ import { Form, Formik } from 'formik'
 import { Ruler, Weight } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import BackButton from '../../components/ui/BackButton/BackButton'
 import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import NumericInputForm from '../../components/ui/NumericInputForm/NumericInputForm'
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
-
-import { useNavigate } from 'react-router-dom'
 import {
 	saveUserDataToFirestore,
 	setHeight,
@@ -33,12 +32,15 @@ const HeightWeightSchema = Yup.object().shape({
 })
 
 const HeightWeight = () => {
+	const navigate = useNavigate()
+	const location = useLocation()
 	const dispatch = useDispatch()
-
 	const auth = getAuth()
 
-	const navigate = useNavigate()
+	// Check if we're in "edit mode" - this is true if navigating from PersonalCard
+	const isEditMode = location.state?.fromPersonalCard || false
 
+	// Get data from Redux
 	const { height: savedHeight, weight: savedWeight } = useSelector(
 		state => state.userData
 	)
@@ -46,7 +48,7 @@ const HeightWeight = () => {
 	// Get current user
 	const currentUser = auth.currentUser
 
-	// Set initial values from Redux or default to empty strings
+	// Initialize form values
 	const [initialValues, setInitialValues] = useState({
 		height: savedHeight || '',
 		weight: savedWeight || '',
@@ -77,6 +79,14 @@ const HeightWeight = () => {
 					},
 				})
 			)
+
+			// If in edit mode, go back to previous page
+			// Otherwise continue with the registration flow
+			if (isEditMode) {
+				navigate(-1) // Go back to where user came from
+			} else {
+				navigate('/goal') // Continue with registration flow
+			}
 		}
 	}
 
@@ -87,61 +97,63 @@ const HeightWeight = () => {
 			onSubmit={handleFormSubmit}
 			enableReinitialize={true}
 		>
-			{formik => (
-				<div className='height-weight-container'>
-					{/* Header */}
-					<div className='height-weight-header'>
-						<div>
-							<BackButton />
+			{formik => {
+				// Check if form is valid for the bottom navigation
+				const isFormValid = formik.isValid && formik.dirty
+
+				return (
+					<div className='height-weight-container'>
+						{/* Header */}
+						<div className='height-weight-header'>
+							<div>
+								<BackButton />
+							</div>
+							{!isEditMode && <ProgressBar progress={60} />}
 						</div>
-						<ProgressBar progress={60} />
+
+						{/* Main Content */}
+						<Form className='height-weight-main-content'>
+							<h1 className='height-weight-title'>
+								What is your height and weight?
+							</h1>
+							<div className='height-weight-input-container'>
+								<NumericInputForm
+									title={'Height'}
+									measuredAs={'ft'}
+									icon={Ruler}
+									name='height'
+									max={8}
+									formik={formik}
+									onChange={e => {
+										formik.handleChange(e)
+									}}
+								/>
+								<NumericInputForm
+									title={'Weight'}
+									measuredAs={'lbs'}
+									icon={Weight}
+									name='weight'
+									max={500}
+									formik={formik}
+									onChange={e => {
+										formik.handleChange(e)
+									}}
+								/>
+							</div>
+
+							<p className='sex-text'>We need this to calculate your BMI</p>
+						</Form>
+
+						{/* Bottom Navigation */}
+						<BottomNavigation
+							disabled={!isFormValid}
+							buttonText={isEditMode ? 'SAVE' : 'NEXT'}
+							isEdit={isEditMode}
+							onClick={formik.handleSubmit}
+						/>
 					</div>
-
-					{/* Main Content */}
-					<Form className='height-weight-main-content'>
-						<h1 className='height-weight-title'>
-							What is your height and weight?
-						</h1>
-						<div className='height-weight-input-container'>
-							<NumericInputForm
-								title={'Height'}
-								measuredAs={'ft'}
-								icon={Ruler}
-								name='height'
-								max={8}
-								formik={formik}
-								onChange={e => {
-									formik.handleChange(e)
-								}}
-							/>
-							<NumericInputForm
-								title={'Weight'}
-								measuredAs={'lbs'}
-								icon={Weight}
-								name='weight'
-								max={500}
-								formik={formik}
-								onChange={e => {
-									formik.handleChange(e)
-								}}
-							/>
-						</div>
-
-						<p className='sex-text'>We need this to calculate your BMI</p>
-					</Form>
-
-					{/* Bottom Navigation */}
-					<BottomNavigation
-						disabled={!formik.isValid || !formik.dirty || formik.isSubmitting}
-						onClick={async () => {
-							await formik.submitForm()
-							if (formik.isValid) {
-								navigate('/goal')
-							}
-						}}
-					/>
-				</div>
-			)}
+				)
+			}}
 		</Formik>
 	)
 }

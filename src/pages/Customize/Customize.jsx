@@ -8,7 +8,7 @@ import ProgressBar from '../../components/ui/ProgressBar/ProgressBar'
 import { Environment, OrbitControls } from '@react-three/drei'
 import { getAuth } from 'firebase/auth'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
 import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import {
@@ -21,10 +21,15 @@ const Customize = () => {
 	const [selectedSkinColor, setSelectedSkinColor] = useState('#F5C6A5')
 
 	const navigate = useNavigate()
+	const location = useLocation()
+	const dispatch = useDispatch()
+	const auth = getAuth()
+
+	const isEditMode = location.state?.fromPersonalCard || false
 
 	const isFormValid = selectedSkinColor !== ''
 
-	const dispatch = useDispatch()
+	const { skinColor: savedSkinColor } = useSelector(state => state.userData)
 
 	const skinColors = [
 		'#F4D4BB',
@@ -34,10 +39,6 @@ const Customize = () => {
 		'#503018',
 		'#2f2217',
 	]
-
-	const auth = getAuth()
-
-	const { skinColor: savedSkinColor } = useSelector(state => state.userData)
 
 	const currentUser = auth.currentUser
 
@@ -59,6 +60,28 @@ const Customize = () => {
 					userData: { skinColor },
 				})
 			)
+		}
+	}
+
+	const handleBottomNavigationClick = () => {
+		if (isFormValid) {
+			// Save to Firestore
+			if (currentUser) {
+				dispatch(
+					saveUserDataToFirestore({
+						userId: currentUser.uid,
+						userData: { skinColor: selectedSkinColor },
+					})
+				)
+			}
+
+			// If in edit mode, go back to previous page
+			// Otherwise continue with the registration flow
+			if (isEditMode) {
+				navigate(-1) // Go back to where user came from
+			} else {
+				navigate('/') // Continue with registration flow
+			}
 		}
 	}
 
@@ -129,14 +152,12 @@ const Customize = () => {
 
 			{/* Bottom Navigation */}
 
+			{/* Bottom Navigation */}
 			<BottomNavigation
 				disabled={!isFormValid}
-				onClick={() => {
-					if (isFormValid) {
-						saveUserDataToFirestore()
-						navigate('/')
-					}
-				}}
+				buttonText={isEditMode ? 'SAVE' : 'NEXT'}
+				isEdit={isEditMode}
+				onClick={handleBottomNavigationClick}
 			/>
 		</div>
 	)

@@ -2,7 +2,7 @@ import { getAuth } from 'firebase/auth'
 import { Mars, Venus } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
 import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import Button from '../../components/ui/Button/Button'
@@ -14,14 +14,15 @@ const Sex = () => {
 	const [selectedSex, setSelectedSex] = useState('')
 
 	const navigate = useNavigate()
-
-	const isFormValid = selectedSex !== ''
-
+	const location = useLocation()
 	const dispatch = useDispatch()
-
 	const auth = getAuth()
 
+	const isEditMode = location.state?.fromPersonalCard || false
+
 	const { sex: savedSex } = useSelector(state => state.userData)
+
+	const isFormValid = selectedSex !== ''
 
 	const currentUser = auth.currentUser
 
@@ -50,6 +51,28 @@ const Sex = () => {
 					userData: { sex },
 				})
 			)
+		}
+	}
+
+	const handleBottomNavigationClick = () => {
+		if (isFormValid) {
+			// Save to Firestore
+			if (currentUser) {
+				dispatch(
+					saveUserDataToFirestore({
+						userId: currentUser.uid,
+						userData: { sex: selectedSex },
+					})
+				)
+			}
+
+			// If in edit mode, go back to previous page
+			// Otherwise continue with the registration flow
+			if (isEditMode) {
+				navigate(-1) // Go back to where user came from
+			} else {
+				navigate('/height-weight')
+			}
 		}
 	}
 
@@ -105,12 +128,9 @@ const Sex = () => {
 			{/* Bottom Navigation */}
 			<BottomNavigation
 				disabled={!isFormValid}
-				onClick={() => {
-					if (isFormValid) {
-						saveUserDataToFirestore()
-						navigate('/height-weight')
-					}
-				}}
+				buttonText={isEditMode ? 'SAVE' : 'NEXT'}
+				isEdit={isEditMode}
+				onClick={handleBottomNavigationClick}
 			/>
 		</div>
 	)

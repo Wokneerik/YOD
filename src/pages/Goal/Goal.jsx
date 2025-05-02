@@ -2,7 +2,7 @@ import { getAuth } from 'firebase/auth'
 import { BicepsFlexed, MoveDownRight, RulerDimensionLine } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import BackButton from '../../components/ui/BackButton/BackButton'
 import BottomNavigation from '../../components/ui/BottomNavigation/BottomNavigation'
 import Button from '../../components/ui/Button/Button'
@@ -11,28 +11,23 @@ import { saveUserDataToFirestore, setGoal } from '../../store/user-data.slice'
 import './styles.css'
 
 const Goal = () => {
-	const [selectedGaol, setSelectedGoal] = useState('')
+	const [selectedGoal, setSelectedGoal] = useState('')
 
 	const navigate = useNavigate()
-
-	const isFormValid = selectedGaol !== ''
-
+	const location = useLocation()
 	const dispatch = useDispatch()
-
 	const auth = getAuth()
 
-	const { goal: savedGoal } = useSelector(state => state.userData)
+	// Check if we're in "edit mode" - this is true if navigating from PersonalCard
+	const isEditMode = location.state?.fromPersonalCard || false
 
+	const { goal: savedGoal } = useSelector(state => state.userData)
 	const currentUser = auth.currentUser
 
+	const isFormValid = selectedGoal !== ''
+
 	useEffect(() => {
-		// If no user is logged in, redirect to sign in
-
-		// if (!currentUser) {
-		//   navigate('/');
-		// }
-
-		// If there's saved sex in Redux, use it
+		// If there's saved goal in Redux, use it
 		if (savedGoal) {
 			setSelectedGoal(savedGoal)
 		}
@@ -53,6 +48,28 @@ const Goal = () => {
 		}
 	}
 
+	const handleBottomNavigationClick = () => {
+		if (isFormValid) {
+			// Save to Firestore
+			if (currentUser) {
+				dispatch(
+					saveUserDataToFirestore({
+						userId: currentUser.uid,
+						userData: { goal: selectedGoal },
+					})
+				)
+			}
+
+			// If in edit mode, go back to previous page
+			// Otherwise continue with the registration flow
+			if (isEditMode) {
+				navigate(-1) // Go back to where user came from
+			} else {
+				navigate('/customize') // Continue with registration flow
+			}
+		}
+	}
+
 	return (
 		<div className='goal-container'>
 			{/* Header */}
@@ -60,7 +77,7 @@ const Goal = () => {
 				<div>
 					<BackButton />
 				</div>
-				<ProgressBar progress={80} />
+				{!isEditMode && <ProgressBar progress={80} />}
 			</div>
 
 			{/* Main Content */}
@@ -69,7 +86,7 @@ const Goal = () => {
 
 				<div className='goal-button-container'>
 					<Button
-						color={selectedGaol === 'bulk' ? '#c2f2f8' : 'white'}
+						color={selectedGoal === 'bulk' ? '#c2f2f8' : 'white'}
 						text={
 							<>
 								<BicepsFlexed
@@ -83,7 +100,7 @@ const Goal = () => {
 						onClick={() => handleGoalSelection('bulk')}
 					/>
 					<Button
-						color={selectedGaol === 'cut' ? '#c2f2f8' : 'white'}
+						color={selectedGoal === 'cut' ? '#c2f2f8' : 'white'}
 						text={
 							<>
 								<MoveDownRight
@@ -98,7 +115,7 @@ const Goal = () => {
 					/>
 
 					<Button
-						color={selectedGaol === 'maintain' ? '#c2f2f8' : 'white'}
+						color={selectedGoal === 'maintain' ? '#c2f2f8' : 'white'}
 						text={
 							<>
 								<RulerDimensionLine
@@ -120,15 +137,11 @@ const Goal = () => {
 			</div>
 
 			{/* Bottom Navigation */}
-
 			<BottomNavigation
 				disabled={!isFormValid}
-				onClick={() => {
-					if (isFormValid) {
-						saveUserDataToFirestore()
-						navigate('/customize')
-					}
-				}}
+				buttonText={isEditMode ? 'SAVE' : 'NEXT'}
+				isEdit={isEditMode}
+				onClick={handleBottomNavigationClick}
 			/>
 		</div>
 	)

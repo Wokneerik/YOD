@@ -1,6 +1,7 @@
 import { ChevronRight } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 import { loadUserDataFromFirestore } from '../../store/user-data.slice'
 import './styles.css'
@@ -9,7 +10,7 @@ const PersonalCard = ({ isVisible }) => {
 	const [showCard, setShowCard] = useState(false)
 
 	const dispatch = useDispatch()
-
+	const navigate = useNavigate()
 	const { user } = UserAuth()
 	const uid = user?.uid
 
@@ -18,7 +19,7 @@ const PersonalCard = ({ isVisible }) => {
 		if (uid) {
 			dispatch(loadUserDataFromFirestore(uid))
 		}
-	}, [uid])
+	}, [uid, dispatch])
 
 	const { name, height, weight, goal } = useSelector(state => state.userData)
 
@@ -31,13 +32,21 @@ const PersonalCard = ({ isVisible }) => {
 		}
 	}, [isVisible])
 
+	// Navigate to edit pages with state indicating we're coming from PersonalCard
+	const navigateToEdit = path => {
+		navigate(path, { state: { fromPersonalCard: true } })
+	}
+
 	if (!isVisible) return null
 
 	return (
 		<div className={`personal-card ${showCard ? 'show' : ''}`}>
 			<div className='personal-card-title'>Personal Details</div>
 
-			<div className='personal-data-item'>
+			<button
+				className='personal-data-item'
+				onClick={() => navigateToEdit('/name')}
+			>
 				<span className='data-label'>Name</span>
 				<div className='data-value'>
 					<span>{name || '-'}</span>
@@ -47,9 +56,12 @@ const PersonalCard = ({ isVisible }) => {
 						strokeWidth={1.75}
 					/>
 				</div>
-			</div>
+			</button>
 
-			<div className='personal-data-item'>
+			<button
+				className='personal-data-item'
+				onClick={() => navigateToEdit('/height-weight')}
+			>
 				<span className='data-label'>Height</span>
 				<div className='data-value'>
 					<span>{height || '-'} ft</span>
@@ -59,9 +71,12 @@ const PersonalCard = ({ isVisible }) => {
 						strokeWidth={1.75}
 					/>
 				</div>
-			</div>
+			</button>
 
-			<div className='personal-data-item'>
+			<button
+				className='personal-data-item'
+				onClick={() => navigateToEdit('/height-weight')}
+			>
 				<span className='data-label'>Weight</span>
 				<div className='data-value'>
 					<span>{weight || '-'} lbs</span>
@@ -71,9 +86,12 @@ const PersonalCard = ({ isVisible }) => {
 						className='personal-card__icon'
 					/>
 				</div>
-			</div>
+			</button>
 
-			<div className='personal-data-item'>
+			<button
+				className='personal-data-item'
+				onClick={() => navigateToEdit('/goal')}
+			>
 				<span className='data-label'>Goal</span>
 				<div className='data-value'>
 					<span>{goal || '-'}</span>
@@ -83,7 +101,7 @@ const PersonalCard = ({ isVisible }) => {
 						className='personal-card__icon'
 					/>
 				</div>
-			</div>
+			</button>
 		</div>
 	)
 }

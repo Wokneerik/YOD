@@ -19,7 +19,7 @@ const SideMainButtons = ({ controlsRef }) => {
         flex-direction: column;
         align-items: center;
         
-        z-index: 9997;
+        z-index: 102;
         opacity: 0;
         transition: opacity 0.3s ease, transform 0.3s ease, background-image 0.3s ease;
       }

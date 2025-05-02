@@ -3,7 +3,7 @@
 	bottom: 20px;
 	left: 20px;
 	cursor: pointer;
-	z-index: 99998;
+	z-index: 106;
 	opacity: 0;
 	transform: scale(0.8);
 	animation: appear 0.3s ease 0.2s forwards;
@@ -33,7 +33,7 @@
 	height: 42.5px;
 	border: 1.5px solid white;
 	border-radius: 50%;
-	z-index: 9999;
+	z-index: 103;
 }
 
 .small-circle {
@@ -43,7 +43,7 @@
 	background-color: rgba(55, 55, 55, 0.7);
 	border-radius: 50%;
 	transform: translate(-45%, 45%);
-	z-index: 9999;
+	z-index: 103;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -62,7 +62,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	z-index: 99999;
+	z-index: 107;
 }
 
 .slider {
@@ -85,7 +85,7 @@
 	cursor: pointer;
 	border: 2px solid white;
 	position: relative;
-	z-index: 9999;
+	z-index: 103;
 	box-shadow: -100vw 0 0 100vw transparent;
 }
 
@@ -141,7 +141,7 @@
 	background-color: rgb(0 0 0 / 85%);
 	backdrop-filter: blur(7px) contrast(70%);
 	-webkit-backdrop-filter: blur(7px) contrast(70%);
-	z-index: 99997;
+	z-index: 104;
 	opacity: 0;
 	visibility: hidden;
 	transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -160,7 +160,7 @@
 	background-color: rgb(0 0 0 / 85%);
 	backdrop-filter: blur(7px) contrast(70%);
 	-webkit-backdrop-filter: blur(7px) contrast(70%);
-	z-index: 99997;
+	z-index: 104;
 	opacity: 0;
 	visibility: hidden;
 	transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -196,7 +196,7 @@
 
 	width: calc(100% - 35px);
 	height: calc(100% - 35px);
-	z-index: 99999;
+	z-index: 106;
 }
 
 .cloud-wrapper {
@@ -240,7 +240,7 @@
 	height: 60px;
 	border: 2px solid white;
 	border-radius: 50%;
-	z-index: 9999999;
+	z-index: 105;
 
 	display: flex;
 	justify-content: center;
@@ -265,7 +265,7 @@
 	height: 40%;
 	border: 4px dashed white;
 	border-radius: 17px;
-	z-index: 999999;
+	z-index: 105;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -282,5 +282,5 @@
 	width: 100%;
 	height: auto;
 	pointer-events: none;
-	z-index: 999999;
+	z-index: 105;
 }

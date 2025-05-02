@@ -87,7 +87,7 @@ const Account = () => {
 				}`}
 				onClick={handleButtonClick}
 				style={{
-					zIndex: openAccPage ? 999999 : 9997,
+					zIndex: openAccPage ? 110 : 102,
 					backgroundImage: openAccPage
 						? ''
 						: `url(${user?.photoURL || '/img/buttons/user.png'})`,
@@ -99,7 +99,7 @@ const Account = () => {
 					<div
 						className={`acc-button-left ${openAccPage ? 'active' : ''}`}
 						style={{
-							zIndex: openAccPage ? 999999 : 9989,
+							zIndex: openAccPage ? 110 : 102,
 							backgroundImage: `url(${
 								user.photoURL || '/img/buttons/user.png'
 							})`,
@@ -108,7 +108,7 @@ const Account = () => {
 					<div
 						className={`user-name-label ${openAccPage ? 'active' : ''}`}
 						style={{
-							zIndex: openAccPage ? 999999 : 9989,
+							zIndex: openAccPage ? 110 : 102,
 						}}
 					>
 						{name || 'User'}
@@ -117,14 +117,14 @@ const Account = () => {
 					<div
 						className={`sign-out-button ${openAccPage ? 'active' : ''}`}
 						style={{
-							zIndex: openAccPage ? 999999 : 9989,
+							zIndex: openAccPage ? 110 : 102,
 						}}
 						onClick={handleSignOut}
 					></div>
 					<div
 						className={`sign-out-label ${openAccPage ? 'active' : ''}`}
 						style={{
-							zIndex: openAccPage ? 999999 : 9989,
+							zIndex: openAccPage ? 110 : 102,
 						}}
 					>
 						Log Out

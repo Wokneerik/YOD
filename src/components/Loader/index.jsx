@@ -23,12 +23,9 @@ const Loader = () => {
 		<Canvas
 			style={{
 				position: 'absolute',
-				top: '50%',
-				left: '50%',
-				transform: 'translate(-50%, -50%)',
 				width: '100vw',
 				height: '100vh',
-				zIndex: 999991,
+				zIndex: 999999,
 				background: 'linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%)',
 			}}
 			camera={{ position: [0, 0, 5], fov: 50 }}

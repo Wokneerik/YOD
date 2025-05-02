@@ -33,7 +33,7 @@ const Avatar = ({ ...props }) => {
 	const userData = useSelector(state => state.userData)
 
 	const sex = isAuthenticated ? userData.sex : 'male'
-	const skinColor = isAuthenticated ? userData.skinColor : null
+	const skinColor = isAuthenticated ? userData.skinColor : defaultSkinColor
 
 	const { nodes } = useGLTF(
 		sex === 'male' ? './models/Male.glb' : './models/Female.glb'

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
 import { svgSmilesStatus } from '../../../constants'
@@ -7,7 +7,7 @@ import {
 	setSliderVisible,
 	setStateCheck,
 } from '../../store/state-check.slice'
-import './style.css'
+import './styles.css'
 
 const StateCheck = () => {
 	const dispatch = useDispatch()
@@ -68,57 +68,54 @@ const StateCheck = () => {
 		))
 	}
 
-	const handleSliderInput = useCallback(
-		event => {
-			const value = parseInt(event.target.value)
-			dispatch(setStateCheck(value))
+	const handleSliderInput = event => {
+		const value = parseInt(event.target.value)
+		dispatch(setStateCheck(value))
 
-			if (timeoutRef.current) clearTimeout(timeoutRef.current)
+		if (timeoutRef.current) clearTimeout(timeoutRef.current)
 
-			timeoutRef.current = setTimeout(() => {
-				dispatch(setSliderVisible(false))
-				dispatch(setShowHealthConditionButton(true))
-			}, 1200)
+		timeoutRef.current = setTimeout(() => {
+			dispatch(setSliderVisible(false))
+			dispatch(setShowHealthConditionButton(true))
+		}, 1200)
 
-			if (smileyRef.current) {
-				const smileyPath = smileyRef.current.querySelector('path')
-				if (smileyPath) {
-					let d, stroke
+		if (smileyRef.current) {
+			const smileyPath = smileyRef.current.querySelector('path')
+			if (smileyPath) {
+				let d, stroke
 
-					if (value < 50) {
-						const t = value / 50
-						const controlPointY = -2 + t * 2
-						d = `M8 15c2 ${controlPointY} 6 ${controlPointY} 8 0`
-						stroke = `rgb(${255}, ${255 * t}, 0)`
-					} else {
-						const t = (value - 50) / 50
-						const controlPointY = 0 + t * 2
-						d = `M8 15c2 ${controlPointY} 6 ${controlPointY} 8 0`
-						stroke = `rgb(${255 - t * 255}, ${255 - t * 85}, 0)`
-					}
-
-					smileyPath.setAttribute('d', d)
-					smileyPath.setAttribute('stroke', stroke)
-
-					if (sliderRef.current) {
-						sliderRef.current.style.background = `linear-gradient(to right, ${stroke} ${value}%, white ${value}%)`
-					}
+				if (value < 50) {
+					const t = value / 50
+					const controlPointY = -2 + t * 2
+					d = `M8 15c2 ${controlPointY} 6 ${controlPointY} 8 0`
+					stroke = `rgb(${255}, ${255 * t}, 0)`
+				} else {
+					const t = (value - 50) / 50
+					const controlPointY = 0 + t * 2
+					d = `M8 15c2 ${controlPointY} 6 ${controlPointY} 8 0`
+					stroke = `rgb(${255 - t * 255}, ${255 - t * 85}, 0)`
 				}
 
-				const maxHeight = -25
-				const progress = value / 100
-				const t = progress
-				const y = maxHeight * (1 - Math.pow(1 - t, 3))
+				smileyPath.setAttribute('d', d)
+				smileyPath.setAttribute('stroke', stroke)
 
-				const containerWidth = containerRef.current?.offsetWidth ?? 0
-				const pixelOffset = (containerWidth - 18) * (value / 100)
-
-				smileyRef.current.style.visibility = 'visible'
-				smileyRef.current.style.transform = `translate(${pixelOffset}px, ${y}px)`
+				if (sliderRef.current) {
+					sliderRef.current.style.background = `linear-gradient(to right, ${stroke} ${value}%, white ${value}%)`
+				}
 			}
-		},
-		[dispatch]
-	)
+
+			const maxHeight = -25
+			const progress = value / 100
+			const t = progress
+			const y = maxHeight * (1 - Math.pow(1 - t, 3))
+
+			const containerWidth = containerRef.current?.offsetWidth ?? 0
+			const pixelOffset = (containerWidth - 18) * (value / 100)
+
+			smileyRef.current.style.visibility = 'visible'
+			smileyRef.current.style.transform = `translate(${pixelOffset}px, ${y}px)`
+		}
+	}
 
 	const handleTouchStart = () => {
 		setIsSliderTouched(true)
@@ -144,7 +141,7 @@ const StateCheck = () => {
 	}, [])
 
 	// Calculate button position
-	const calculateSmallCirclePosition = () => {
+	const calculateSmileMoodPosition = () => {
 		const outerCircleRadius = 30
 		const angle = (180 - (stateCheck * 180) / 100) * (Math.PI / 180)
 		const baseX = 30
@@ -180,6 +177,8 @@ const StateCheck = () => {
 	const handleButtonClick = () => {
 		setOpenStateScreen(prev => !prev)
 	}
+
+	console.log('CHECK STATE CHECK RERENDERS')
 
 	return (
 		<>
@@ -259,10 +258,7 @@ const StateCheck = () => {
 							<div className='state-check-label'>wellness</div>
 						</div>
 						<div className='inner-circle' />
-						<div
-							className='small-circle'
-							style={calculateSmallCirclePosition()}
-						>
+						<div className='small-circle' style={calculateSmileMoodPosition()}>
 							<div className='smileyInButton'>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'

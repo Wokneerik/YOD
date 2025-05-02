@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import ProductItem from '../ProductItem/ProductItem'
-import './style.css'
+import './styles.css'
 
 const StoreButton = () => {
 	const [isShopOpen, setIsShopOpen] = useState(false)
@@ -43,7 +43,7 @@ const StoreButton = () => {
 							isShopOpen ? 'showing-shop-close' : 'showing-shop-btn'
 						}`}
 						onClick={handleButtonClick}
-						style={{ zIndex: isShopOpen ? 999999 : 9997 }}
+						style={{ zIndex: isShopOpen ? 109 : 102 }}
 					>
 						<div className='shop-button-label'>store</div>
 					</div>

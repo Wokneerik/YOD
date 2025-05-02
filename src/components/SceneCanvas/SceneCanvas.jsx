@@ -41,6 +41,10 @@ const SceneCanvas = () => {
 				height: '100%',
 			}}
 		>
+			<Account />
+			<StateCheck />
+			<CaloriesButton />
+			<StoreButton />
 			<Canvas
 				style={{
 					position: 'absolute',
@@ -56,14 +60,6 @@ const SceneCanvas = () => {
 					<Logo />
 				</Suspense>
 			</Canvas>
-
-			<Suspense fallback={null}>
-				<Account />
-				<StateCheck />
-
-				<CaloriesButton />
-				<StoreButton />
-			</Suspense>
 
 			<Canvas camera={camera} style={{ zIndex: 100 }}>
 				<Preload all />

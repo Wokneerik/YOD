@@ -36,7 +36,7 @@ const CaloriesButton = () => {
 						isCaloriesOpen ? 'showing-calories-close' : 'showing-calories-btn'
 					}`}
 					onClick={handleButtonClick}
-					style={{ zIndex: isCaloriesOpen ? 999999 : 9997 }}
+					style={{ zIndex: isCaloriesOpen ? 109 : 102 }}
 				>
 					<div className='calories-button-label'>calories</div>
 				</div>

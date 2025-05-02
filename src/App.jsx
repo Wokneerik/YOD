@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Loader from './components/Loader/index.jsx'
 import { AuthContextProvider } from './context/AuthContext.jsx'
+import Customize from './pages/Customize/Customize.jsx'
 import Goal from './pages/Goal/Goal.jsx'
 import HeightWeight from './pages/HeightWeight/HeightWeight.jsx'
 import Name from './pages/Name/Name.jsx'
 import Sex from './pages/Sex/Sex.jsx'
-import SkinColor from './pages/SkinColor/SkinColor.jsx'
 import Welcome from './pages/Welcome/Welcome.jsx'
 
 const Scene = React.lazy(() =>
@@ -34,7 +34,7 @@ function App() {
 					<Route path='/sex' element={<Sex />} />
 					<Route path='/height-weight' element={<HeightWeight />} />
 					<Route path='/goal' element={<Goal />} />
-					<Route path='/skin-color' element={<SkinColor />} />
+					<Route path='/customize' element={<Customize />} />
 				</Routes>
 			</BrowserRouter>
 		</AuthContextProvider>

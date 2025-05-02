@@ -17,7 +17,7 @@ import {
 } from '../../store/user-data.slice'
 import './styles.css'
 
-const SkinColor = () => {
+const Customize = () => {
 	const [selectedSkinColor, setSelectedSkinColor] = useState('#F5C6A5')
 
 	const navigate = useNavigate()
@@ -204,4 +204,4 @@ const SceneContent = ({ skinColor }) => {
 	)
 }
 
-export default SkinColor
+export default Customize

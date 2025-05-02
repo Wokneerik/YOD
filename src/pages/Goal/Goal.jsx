@@ -126,7 +126,7 @@ const Goal = () => {
 				onClick={() => {
 					if (isFormValid) {
 						saveUserDataToFirestore()
-						navigate('/skin-color')
+						navigate('/customize')
 					}
 				}}
 			/>
